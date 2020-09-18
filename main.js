@@ -1,5 +1,6 @@
 const TUESDAY_TIME_DIFF = 2;
 const THURSDAY_TIME_DIFF = 4;
+const SATURDAY_TIME_DIFF = 6;
 
 function getThisWeeksTuesday() {
     const thisWeeksTuesday = new Date(Date.now());
@@ -29,6 +30,20 @@ function getThisWeeksThursday() {
     return new Date(nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7))
 }
 
+function getThisWeeksSaturday() {
+    const thisWeeksSaturday = new Date(Date.now());
+    const today = thisWeeksSaturday.getDate();
+    const dayOfTheWeek = thisWeeksSaturday.getDay();
+    thisWeeksSaturday.setDate(today - dayOfTheWeek + SATURDAY_TIME_DIFF);
+    thisWeeksSaturday.setHours(18, 0, 0, 0);
+
+    if (new Date() < thisWeeksSaturday) {
+        return new Date(thisWeeksSaturday);
+    }
+    const nextWeeksTraining = new Date(thisWeeksSaturday);
+    return new Date(nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7))
+}
+
 function getTrainingDateAsGermanDateFormat(trainingDate) {
     return trainingDate.getUTCDate() + '.' + (trainingDate.getMonth() + 1) + '.' + trainingDate.getFullYear();
 }
@@ -41,6 +56,10 @@ function trainingDayForChannelId(channelId) {
     if (channelId == "C012K00AJFL") {
         return "Donnerstag"
     }
+
+    if (channelId == "C012C7UQPSS") {
+        return "Samstag"
+    }
 }
 
 function getUpcomingTrainingWeekDayDate(trainingDay) {
@@ -50,14 +69,23 @@ function getUpcomingTrainingWeekDayDate(trainingDay) {
     } else if (trainingDay === 'Donnerstag') {
         trainingDate = getThisWeeksThursday();
     }
+      else if (trainingDay === 'Samstag') {
+        trainingDate = getThisWeeksSaturday();
+    }
 
     return getTrainingDateAsGermanDateFormat(trainingDate)
 }
 
 function saveNewTrainingAttendeeToSpreadSheet(fullTrainingWeekDayName, upcomingTrainingWeekDayDate, spreadsheetApp, userName, channelName) {
     const spreadsheetName = fullTrainingWeekDayName + ' ' + upcomingTrainingWeekDayDate;
-    const spreadsheet = spreadsheetApp.getSheetByName(fullTrainingWeekDayName);
-    spreadsheet.appendRow([userName, channelName, Date.now()]);
+    let spreadsheet = spreadsheetApp.getSheetByName(fullTrainingWeekDayName);
+
+    if (spreadsheet == null) {
+      spreadsheet = spreadsheetApp.insertSheet(spreadsheetName);
+    }
+
+    spreadsheet.appendRow([userName, Date.now()]);
+
     return spreadsheetName
 }
 

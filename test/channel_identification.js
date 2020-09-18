@@ -68,6 +68,31 @@ describe('Training day via channel', function () {
                 assert.equal(expectedOutputThisWeek, returnValue)
             }
         })
+
+        it('should return Saturday when being in #training-saturday channel', function () {
+            const e = {
+                parameter: {
+                    user_name: {},
+                    channel_id: "C012C7UQPSS",
+                    channel_name: "training-samstag"
+                }
+            };
+
+            let thisWeeksSaturday = getThisWeeksDay(false, 6);
+            let nextWeeksSaturday = getThisWeeksDay(true, 6);
+            let returnValue = app._test.doPost(e);
+
+            let expectedOutputThisWeek = "Du bist beim Training am Samstag " + getDateInGermanFormat(thisWeeksSaturday) + " dabei :confetti_ball:";
+            let expectedOutputNextWeek = "Du bist beim Training am Samstag " + getDateInGermanFormat(nextWeeksSaturday) + " dabei :confetti_ball:";
+
+            if (thisWeeksSaturday < Date.now()) {
+                console.log("Expect next weeks Saturday")
+                assert.equal(expectedOutputNextWeek, returnValue)
+            } else {
+                console.log("Expect this weeks Saturday")
+                assert.equal(expectedOutputThisWeek, returnValue)
+            }
+        })
     })
 })
 
