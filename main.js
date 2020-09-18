@@ -33,11 +33,14 @@ function getTrainingDateAsGermanDateFormat(trainingDate) {
     return trainingDate.getUTCDate() + '.' + (trainingDate.getMonth() + 1) + '.' + trainingDate.getFullYear();
 }
 
-function getFullTrainingWeekDayName(channelName) {
-    const channelPrefixLength = 'training-'.length;
-    let trainingDay = channelName.slice(channelPrefixLength);
-    trainingDay = trainingDay.charAt(0).toLocaleUpperCase() + trainingDay.slice(1);
-    return trainingDay;
+function trainingDayForChannelId(channelId) {
+    if (channelId == "C012C7UEX9C") {
+        return "Dienstag"
+    }
+
+    if (channelId == "C012K00AJFL") {
+        return "Donnerstag"
+    }
 }
 
 function getUpcomingTrainingWeekDayDate(trainingDay) {
@@ -67,8 +70,9 @@ function doPost(e) {
 
     const userName = e.parameter.user_name;
     const channelName = e.parameter.channel_name;
+    const channelId = e.parameter.channel_id;
 
-    let fullTrainingWeekDayName = getFullTrainingWeekDayName(channelName);
+    let fullTrainingWeekDayName = trainingDayForChannelId(channelId);
     let upcomingTrainingWeekDayDate = getUpcomingTrainingWeekDayDate(fullTrainingWeekDayName);
 
     let spokenTrainingDate = saveNewTrainingAttendeeToSpreadSheet(fullTrainingWeekDayName, upcomingTrainingWeekDayDate, spreadsheetApp, userName, channelName);

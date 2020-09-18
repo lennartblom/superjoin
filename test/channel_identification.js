@@ -23,6 +23,7 @@ describe('Training day via channel', function () {
             const e = {
                 parameter: {
                     user_name: {},
+                    channel_id: "C012C7UEX9C",
                     channel_name: "training-dienstag"
                 }
             };
@@ -47,6 +48,7 @@ describe('Training day via channel', function () {
             const e = {
                 parameter: {
                     user_name: {},
+                    channel_id: "C012K00AJFL",
                     channel_name: "training-donnerstag"
                 }
             };
