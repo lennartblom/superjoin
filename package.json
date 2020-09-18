@@ -12,6 +12,7 @@
     "prettier": "2.1.2"
   },
   "scripts": {
+    "pretty": "prettier --write .",
     "test": "mocha"
   },
   "repository": {
