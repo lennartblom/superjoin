@@ -125,7 +125,9 @@ function participate(e) {
     channelName
   );
 
-  return  "Du bist beim Training am " + spokenTrainingDate + " dabei :confetti_ball:";
+  return (
+    "Du bist beim Training am " + spokenTrainingDate + " dabei :confetti_ball:"
+  );
 }
 
 module.exports = participate;
