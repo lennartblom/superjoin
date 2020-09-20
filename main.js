@@ -91,7 +91,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
     fullTrainingWeekDayName + " " + upcomingTrainingWeekDayDate;
   let spreadsheet = spreadsheetApp.getSheetByName(fullTrainingWeekDayName);
 
-  if (typeof spreadsheet === "undefined") {
+  if (typeof spreadsheet === "undefined" && (typeof spreadsheet !== "object" || !spreadsheet)) {
     spreadsheet = spreadsheetApp.insertSheet(spreadsheetName);
   }
 
