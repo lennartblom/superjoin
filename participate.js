@@ -35,7 +35,7 @@ function getThisWeeksSaturday() {
   const today = thisWeeksSaturday.getDate();
   const dayOfTheWeek = thisWeeksSaturday.getDay();
   thisWeeksSaturday.setDate(today - dayOfTheWeek + SATURDAY_TIME_DIFF);
-  thisWeeksSaturday.setHours(18, 0, 0, 0);
+  thisWeeksSaturday.setHours(10, 0, 0, 0);
 
   if (new Date() < thisWeeksSaturday) {
     return new Date(thisWeeksSaturday);
