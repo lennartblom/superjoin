@@ -81,6 +81,12 @@ function getUpcomingTrainingWeekDayDate(trainingDay) {
   return getTrainingDateAsGermanDateFormat(trainingDate);
 }
 
+function newSheet(spreadsheetApp, sheetName) {
+  const sheet = spreadsheetApp.insertSheet(sheetName);
+
+  return sheet.appendRow(["Name", "Eingetragen um"]);
+}
+
 function saveNewTrainingAttendeeToSpreadSheet(
   fullTrainingWeekDayName,
   upcomingTrainingWeekDayDate,
@@ -89,13 +95,13 @@ function saveNewTrainingAttendeeToSpreadSheet(
 ) {
   const spreadsheetName =
     fullTrainingWeekDayName + " " + upcomingTrainingWeekDayDate;
-  let spreadsheet = spreadsheetApp.getSheetByName(fullTrainingWeekDayName);
+  let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
-  if (typeof spreadsheet === "undefined" && (typeof spreadsheet !== "object" || !spreadsheet)) {
-    spreadsheet = spreadsheetApp.insertSheet(spreadsheetName);
+  if (spreadsheet == null) {
+    spreadsheet = newSheet(spreadsheetApp, spreadsheetName);
   }
 
-  spreadsheet.appendRow([userName, Date.now()]);
+  spreadsheet.appendRow([userName, new Date().toISOString()]);
 
   return spreadsheetName;
 }
