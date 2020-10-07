@@ -20,6 +20,7 @@ describe("Training day via channel", function () {
       const e = {
         parameter: {
           user_name: {},
+          command: "/dabei",
           channel_id: "C012C7UEX9C",
           channel_name: "training-dienstag",
         },
@@ -51,6 +52,7 @@ describe("Training day via channel", function () {
       const e = {
         parameter: {
           user_name: {},
+          command: "/dabei",
           channel_id: "C012K00AJFL",
           channel_name: "training-donnerstag",
         },
@@ -82,6 +84,7 @@ describe("Training day via channel", function () {
       const e = {
         parameter: {
           user_name: {},
+          command: "/dabei",
           channel_id: "C012C7UQPSS",
           channel_name: "training-samstag",
         },
