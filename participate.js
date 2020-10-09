@@ -55,15 +55,15 @@ function getTrainingDateAsGermanDateFormat(trainingDate) {
 }
 
 function trainingDayForChannelId(channelId) {
-  if (channelId == "C012C7UEX9C") {
+  if (channelId === "C012C7UEX9C") {
     return "Dienstag";
   }
 
-  if (channelId == "C012K00AJFL") {
+  if (channelId === "C012K00AJFL") {
     return "Donnerstag";
   }
 
-  if (channelId == "C012C7UQPSS") {
+  if (channelId === "C012C7UQPSS") {
     return "Samstag";
   }
 }
@@ -85,20 +85,25 @@ function saveNewTrainingAttendeeToSpreadSheet(
   fullTrainingWeekDayName,
   upcomingTrainingWeekDayDate,
   spreadsheetApp,
-  userName,
-  channelName
+  userName
 ) {
   const spreadsheetName =
     fullTrainingWeekDayName + " " + upcomingTrainingWeekDayDate;
-  let spreadsheet = spreadsheetApp.getSheetByName(fullTrainingWeekDayName);
+  let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
   if (spreadsheet == null) {
-    spreadsheet = spreadsheetApp.insertSheet(spreadsheetName);
+    spreadsheet = newSheet(spreadsheetApp, spreadsheetName);
   }
 
   spreadsheet.appendRow([userName, Date.now()]);
 
   return spreadsheetName;
+}
+
+function newSheet(spreadsheetApp, sheetName) {
+  const sheet = spreadsheetApp.insertSheet(sheetName);
+
+  return sheet.appendRow(["Name", "Eingetragen um"]);
 }
 
 function participate(e) {
@@ -109,7 +114,6 @@ function participate(e) {
   const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
 
   const userName = e.parameter.user_name;
-  const channelName = e.parameter.channel_name;
   const channelId = e.parameter.channel_id;
 
   let fullTrainingWeekDayName = trainingDayForChannelId(channelId);
@@ -121,8 +125,7 @@ function participate(e) {
     fullTrainingWeekDayName,
     upcomingTrainingWeekDayDate,
     spreadsheetApp,
-    userName,
-    channelName
+    userName
   );
 
   return (
