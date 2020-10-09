@@ -13,7 +13,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
     spreadsheet = newSheet(spreadsheetApp, spreadsheetName);
   }
 
-  spreadsheet.appendRow([userName, Date.now()]);
+  spreadsheet.appendRow([userName, new Date().toISOString()]);
 
   return spreadsheetName;
 }
