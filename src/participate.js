@@ -1,5 +1,15 @@
 const getSpreadsheetName = require("./crossDomain");
 
+function addParticipantToSpreadsheet(newSpreadsheet, userName) {
+  newSpreadsheet.appendRow([userName, new Date().toISOString()]);
+}
+
+function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, userName) {
+  const newSpreadsheet = newSheet(spreadsheetApp, spreadsheetName);
+  addParticipantToSpreadsheet(newSpreadsheet, userName);
+  return spreadsheetName;
+}
+
 function saveNewTrainingAttendeeToSpreadSheet(
   channelId,
   spreadsheetApp,
@@ -10,12 +20,30 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
   if (spreadsheet == null) {
-    spreadsheet = newSheet(spreadsheetApp, spreadsheetName);
+    return createSpreadsheetAndAddParticipant(
+      spreadsheetApp,
+      spreadsheetName,
+      userName
+    );
   }
 
-  spreadsheet.appendRow([userName, new Date().toISOString()]);
+  let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
+  let alreadyInList = false;
+  upcomingTrainingParticipants.forEach(function (row) {
+    if(row[0] === userName) {
+      alreadyInList = true;
+    }
+  });
 
-  return spreadsheetName;
+  if (alreadyInList) {
+    console.log("Member already in list");
+    console.log(spreadsheetName);
+    return "Du bist schon beim Training " + spreadsheetName +
+      " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
+  }
+  addParticipantToSpreadsheet(spreadsheet, userName);
+
+  return "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
 }
 
 function newSheet(spreadsheetApp, sheetName) {
@@ -34,14 +62,10 @@ function participate(e) {
   const userName = e.parameter.user_name;
   const channelId = e.parameter.channel_id;
 
-  let spokenTrainingDate = saveNewTrainingAttendeeToSpreadSheet(
+  return saveNewTrainingAttendeeToSpreadSheet(
     channelId,
     spreadsheetApp,
     userName
-  );
-
-  return (
-    "Du bist beim Training am " + spokenTrainingDate + " dabei :confetti_ball:"
   );
 }
 

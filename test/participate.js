@@ -6,13 +6,19 @@ global.ContentService = {
   createTextOutput: (variable) => variable,
 };
 
+
 describe("`/dabei` command", function () {
 
   it("should return Tuesday when being in #training-dienstag channel", function () {
     global.SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
-        getSheetByName: (variable) => ({
+        getSheetByName: () => ({
           appendRow: () => ({}),
+          getDataRange: () => ({
+            getValues: () => [
+              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
+            ]
+          }),
         }),
       }),
     };
@@ -20,7 +26,7 @@ describe("`/dabei` command", function () {
 
     const requestData = {
       parameter: {
-        user_name: {},
+        user_name: "wolfgang",
         command: "/dabei",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",
@@ -31,28 +37,72 @@ describe("`/dabei` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
     let returnValue = app._test.doPost(requestData);
 
-    let expectedOutputThisWeek =
-      "Du bist beim Training am Dienstag " +
-      getDateInGermanFormat(thisWeeksTuesday) +
-      " dabei :confetti_ball:";
-    let expectedOutputNextWeek =
-      "Du bist beim Training am Dienstag " +
-      getDateInGermanFormat(nextWeeksTuesday) +
-      " dabei :confetti_ball:";
+
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
-      assert.equal(expectedOutputNextWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag"));
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.equal(expectedOutputThisWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag"));
     }
   });
 
+  it("should say you're already participating on Tuesday's", function () {
+    global.SpreadsheetApp = {
+      getActiveSpreadsheet: () => ({
+        getSheetByName: () => ({
+          appendRow: () => ({}),
+          getDataRange: () => ({
+            getValues: () => [
+              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
+            ]
+          }),
+        }),
+      }),
+    };
+
+
+    const requestData = {
+      parameter: {
+        user_name: "max mustermann",
+        command: "/dabei",
+        channel_id: "C012C7UEX9C",
+        channel_name: "training-dienstag",
+      },
+    };
+
+    let thisWeeksTuesday = getThisWeeksDay(false, 2);
+    let nextWeeksTuesday = getThisWeeksDay(true, 2);
+    let returnValue = app._test.doPost(requestData);
+
+    if (thisWeeksTuesday < Date.now()) {
+      console.log("Expect next weeks Tuesday");
+      assert.equal(returnValue, createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, "Dienstag"));
+    } else {
+      console.log("Expect this weeks Tuesday");
+      assert.equal(returnValue, createdExpectedOutputForAlreadyParticipating(thisWeeksTuesday, "Dienstag"));
+    }
+  })
+
   it("should return Thursday when being in #training-donnerstag channel", function () {
+    global.SpreadsheetApp = {
+      getActiveSpreadsheet: () => ({
+        getSheetByName: () => ({
+          appendRow: () => ({}),
+          getDataRange: () => ({
+            getValues: () => [
+              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
+            ]
+          }),
+        }),
+      }),
+    };
+
+
     const e = {
       parameter: {
-        user_name: {},
+        user_name: "Wolfgang",
         command: "/dabei",
         channel_id: "C012K00AJFL",
         channel_name: "training-donnerstag",
@@ -63,28 +113,32 @@ describe("`/dabei` command", function () {
     let nextWeeksThursday = getThisWeeksDay(true, 4);
     let returnValue = app._test.doPost(e);
 
-    let expectedOutputThisWeek =
-      "Du bist beim Training am Donnerstag " +
-      getDateInGermanFormat(thisWeeksThursday) +
-      " dabei :confetti_ball:";
-    let expectedOutputNextWeek =
-      "Du bist beim Training am Donnerstag " +
-      getDateInGermanFormat(nextWeeksThursday) +
-      " dabei :confetti_ball:";
-
     if (thisWeeksThursday < Date.now()) {
       console.log("Expect next weeks Thursday");
-      assert.equal(expectedOutputNextWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag"));
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.equal(expectedOutputThisWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag"));
     }
   });
 
   it("should return Saturday when being in #training-saturday channel", function () {
+    global.SpreadsheetApp = {
+      getActiveSpreadsheet: () => ({
+        getSheetByName: () => ({
+          appendRow: () => ({}),
+          getDataRange: () => ({
+            getValues: () => [
+              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
+            ]
+          }),
+        }),
+      }),
+    };
+
     const e = {
       parameter: {
-        user_name: {},
+        user_name: "wolfgang",
         command: "/dabei",
         channel_id: "C012C7UQPSS",
         channel_name: "training-samstag",
@@ -95,21 +149,12 @@ describe("`/dabei` command", function () {
     let nextWeeksSaturday = getThisWeeksDay(true, 6);
     let returnValue = app._test.doPost(e);
 
-    let expectedOutputThisWeek =
-      "Du bist beim Training am Samstag " +
-      getDateInGermanFormat(thisWeeksSaturday) +
-      " dabei :confetti_ball:";
-    let expectedOutputNextWeek =
-      "Du bist beim Training am Samstag " +
-      getDateInGermanFormat(nextWeeksSaturday) +
-      " dabei :confetti_ball:";
-
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
-      assert.equal(expectedOutputNextWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag"));
     } else {
       console.log("Expect this weeks Saturday");
-      assert.equal(expectedOutputThisWeek, returnValue);
+      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag"));
     }
   });
 });
@@ -128,6 +173,18 @@ function getThisWeeksDay(plusOneWeek, dayConstant) {
   }
 
   return newDate;
+}
+
+function createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, day) {
+  return "Du bist schon beim Training " + day + " " +
+    getDateInGermanFormat(nextWeeksTuesday) +
+    " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
+}
+
+function createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, day) {
+  return "Du bist beim Training am " + day + " " +
+    getDateInGermanFormat(nextWeeksTuesday) +
+    " dabei :confetti_ball:";
 }
 
 function getDateInGermanFormat(newDate) {
