@@ -11,7 +11,7 @@ function listParticipants(e) {
 
     let trainingSpreadSheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
-    var participantsRows = trainingSpreadSheet.getDataRange().getValues();
+    const participantsRows = trainingSpreadSheet.getDataRange().getValues();
 
     let participantsOutput = initializeWithTrainingHeadline(spreadsheetName);
     participantsOutput = addStartingCodeSection(participantsOutput);
@@ -26,7 +26,6 @@ function listParticipants(e) {
     });
 
     participantsOutput = addEndingCodeSection(participantsOutput);
-    Logger.log(participantsOutput);
     return participantsOutput;
 }
 function initializeWithTrainingHeadline(spreadsheetName) {
