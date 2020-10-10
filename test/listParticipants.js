@@ -1,22 +1,15 @@
 const assert = require("assert");
-const app = require("../src/main");
-
 const listParticipants = require("../src/listParticipants");
-
-
 
 global.ContentService = {
     createTextOutput: (variable) => variable,
 };
 
 describe("`/teilnehmer` command", function () {
-
-
-
     it("should return 2 participants of spreadsheet data", function () {
         global.SpreadsheetApp = {
             getActiveSpreadsheet: () => ({
-                getSheetByName: (variable) => ({
+                getSheetByName: () => ({
                     getDataRange: () => ({
                         getValues: () => [
                             [""], ["max musterman", 1337], ["alina musterfrau", 1337]
@@ -34,7 +27,7 @@ describe("`/teilnehmer` command", function () {
             },
         };
 
-        let returnValue = app._test.doPost(requestData);
+        let returnValue = listParticipants(requestData);
 
         assert.equal(returnValue, EXPECTED_VALUE_TWO_PARTICIPANTS);
     });
@@ -42,7 +35,7 @@ describe("`/teilnehmer` command", function () {
     it("should return 3 participants of spreadsheet data", function () {
         global.SpreadsheetApp = {
             getActiveSpreadsheet: () => ({
-                getSheetByName: (variable) => ({
+                getSheetByName: () => ({
                     getDataRange: () => ({
                         getValues: () => [
                             [""], ["max musterman", 1337], ["klaus störtebecker", 13378], ["alina musterfrau", 1337]
@@ -60,7 +53,7 @@ describe("`/teilnehmer` command", function () {
             },
         };
 
-        let returnValue = app._test.doPost(requestData);
+        let returnValue = listParticipants(requestData);
 
         assert.equal(returnValue, EXPECTED_VALUE_THREE_PARTICIPANTS);
     });

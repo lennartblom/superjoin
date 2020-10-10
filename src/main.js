@@ -12,10 +12,12 @@ function doPost(e) {
   let textOutput;
 
   let command = e.parameter.command;
+  Logger.log(command);
 
   switch (command) {
     case PARTICIPATE_COMMAND: {
       textOutput = participate(e);
+      textOutput = textOutput + listParticipants(e);
       break;
     }
     case LIST_PARTICIPANTS_COMMAND: {

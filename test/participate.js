@@ -1,5 +1,5 @@
-const app = require("../src/main.js");
 const assert = require("assert");
+const participate = require("../src/participate");
 
 
 global.ContentService = {
@@ -35,7 +35,7 @@ describe("`/dabei` command", function () {
 
     let thisWeeksTuesday = getThisWeeksDay(false, 2);
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
-    let returnValue = app._test.doPost(requestData);
+    let returnValue = participate(requestData);
 
 
 
@@ -74,7 +74,7 @@ describe("`/dabei` command", function () {
 
     let thisWeeksTuesday = getThisWeeksDay(false, 2);
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
-    let returnValue = app._test.doPost(requestData);
+    let returnValue = participate(requestData);
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
@@ -111,7 +111,7 @@ describe("`/dabei` command", function () {
 
     let thisWeeksThursday = getThisWeeksDay(false, 4);
     let nextWeeksThursday = getThisWeeksDay(true, 4);
-    let returnValue = app._test.doPost(e);
+    let returnValue = participate(e);
 
     if (thisWeeksThursday < Date.now()) {
       console.log("Expect next weeks Thursday");
@@ -147,7 +147,7 @@ describe("`/dabei` command", function () {
 
     let thisWeeksSaturday = getThisWeeksDay(false, 6);
     let nextWeeksSaturday = getThisWeeksDay(true, 6);
-    let returnValue = app._test.doPost(e);
+    let returnValue = participate(e);
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");

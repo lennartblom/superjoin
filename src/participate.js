@@ -36,8 +36,6 @@ function saveNewTrainingAttendeeToSpreadSheet(
   });
 
   if (alreadyInList) {
-    console.log("Member already in list");
-    console.log(spreadsheetName);
     return "Du bist schon beim Training " + spreadsheetName +
       " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
   }
