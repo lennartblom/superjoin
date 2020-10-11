@@ -1,9 +1,11 @@
 const participate = require("./participate");
 const listParticipants = require("./listParticipants");
+const {signOut} = require("./signOut");
 const {notifyAboutParticipant} = require("./channelNotifications")
 
 const PARTICIPATE_COMMAND = "/dabei";
 const LIST_PARTICIPANTS_COMMAND = "/teilnehmer";
+const SIGN_OUT_COMMAND = "/austragen";
 
 function doPost(e) {
   if (typeof e === "undefined") {
@@ -26,6 +28,11 @@ function doPost(e) {
     }
     case LIST_PARTICIPANTS_COMMAND: {
       textOutput = listParticipants(e);
+      break;
+    }
+    case SIGN_OUT_COMMAND: {
+      const result = signOut(e);
+      textOutput = result[0] + listParticipants(e);
       break;
     }
   }
