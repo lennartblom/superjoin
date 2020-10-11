@@ -14,10 +14,10 @@ function notifyAboutParticipant(e) {
 
 function notifyChannelAboutNewParticipant(channelId, participant) {
   const channelWebHookUrl = getChannelWebhook(channelId);
+
   if (channelWebHookUrl == null) {
     return 404;
   }
-
   let requestOptions = {
     method: 'post',
     payload: {

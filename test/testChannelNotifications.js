@@ -1,5 +1,5 @@
 const assert = require("assert")
-const notifyChannelAboutNewParticipant = require("../src/channelNotifications")
+const {notifyChannelAboutNewParticipant} = require("../src/channelNotifications")
 
 
 const EXPECTED_POST_DATA = {
@@ -53,5 +53,3 @@ describe("channelNotifications component", function () {
     assert.equal(result, 200);
   });
 });
-
-
