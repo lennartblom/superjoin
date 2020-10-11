@@ -1,4 +1,4 @@
-const getSpreadsheetName = require("./crossDomain");
+const {getSpreadsheetName} = require("./crossDomain");
 
 function listParticipants(e) {
   if (typeof e === "undefined") {
@@ -47,7 +47,9 @@ function addEndingCodeSection(participantsOutput) {
   return participantsOutput + "```";
 }
 
-module.exports = listParticipants;
+module.exports = {
+  listParticipants: listParticipants
+};
 
 exports._test = {
   listParticipants: listParticipants,

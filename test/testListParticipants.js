@@ -1,5 +1,5 @@
 const assert = require("assert");
-const listParticipants = require("../src/listParticipants");
+const {listParticipants} = require("../src/listParticipants");
 
 global.ContentService = {
     createTextOutput: (variable) => variable,

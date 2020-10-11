@@ -1,4 +1,4 @@
-const getSpreadsheetName = require("./crossDomain");
+const {getSpreadsheetName} = require("./crossDomain");
 
 function addParticipantToSpreadsheet(newSpreadsheet, userName) {
   newSpreadsheet.appendRow([userName, new Date().toISOString()]);
@@ -8,6 +8,10 @@ function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, use
   const newSpreadsheet = newSheet(spreadsheetApp, spreadsheetName);
   addParticipantToSpreadsheet(newSpreadsheet, userName);
   return spreadsheetName;
+}
+
+function generateResultMessage(output, newParticipant) {
+  return [output, newParticipant];
 }
 
 function saveNewTrainingAttendeeToSpreadSheet(
@@ -20,11 +24,12 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
   if (spreadsheet == null) {
-    return createSpreadsheetAndAddParticipant(
+    const output = createSpreadsheetAndAddParticipant(
       spreadsheetApp,
       spreadsheetName,
       userName
     );
+    return generateResultMessage(output, true);
   }
 
   let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
@@ -36,12 +41,14 @@ function saveNewTrainingAttendeeToSpreadSheet(
   });
 
   if (alreadyInList) {
-    return "Du bist schon beim Training " + spreadsheetName +
+    const output = "Du bist schon beim Training " + spreadsheetName +
       " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
+    return generateResultMessage(output, false);
   }
   addParticipantToSpreadsheet(spreadsheet, userName);
 
-  return "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
+  let output = "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
+  return generateResultMessage(output, true);
 }
 
 function newSheet(spreadsheetApp, sheetName) {
