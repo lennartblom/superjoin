@@ -3,7 +3,7 @@ const THURSDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdas
 const SATURDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
 const TEST_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TEST";
 
-exports = {
+module.exports = {
   TUESDAY_WEBHOOK_URL: TUESDAY_WEBHOOK_URL,
   THURSDAY_WEBHOOK_URL: THURSDAY_WEBHOOK_URL,
   SATURDAY_WEBHOOK_URL: SATURDAY_WEBHOOK_URL,

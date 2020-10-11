@@ -3,7 +3,11 @@ const {notifyChannelAboutNewParticipant} = require("../src/channelNotifications"
 
 
 const EXPECTED_POST_DATA = {
-  method: 'post', payload: {text: "max.mustermann hat sich zum nächsten Training angemeldet! :heavy_plus_sign:"}
+  method: 'post',
+  headers: {
+    'Content-type': 'application/json'
+  },
+  payload: JSON.stringify({text: ":heavy_plus_sign: `max.mustermann` hat sich zum nächsten Training angemeldet!"})
 };
 describe("channelNotifications component", function () {
   it("should return 404 when no webhook URL is defined", function () {

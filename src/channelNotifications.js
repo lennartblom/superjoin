@@ -19,10 +19,13 @@ function notifyChannelAboutNewParticipant(channelId, participant) {
     return 404;
   }
   let requestOptions = {
-    method: 'post',
-    payload: {
-      text: '' + participant + " hat sich zum nächsten Training angemeldet! :heavy_plus_sign:"
-    }
+    'method': 'post',
+    'headers': {
+      'Content-type': 'application/json'
+    },
+    'payload': JSON.stringify({
+      'text': ":heavy_plus_sign: `" + participant + "` hat sich zum nächsten Training angemeldet!"
+    })
   };
   UrlFetchApp.fetch(channelWebHookUrl, requestOptions);
 

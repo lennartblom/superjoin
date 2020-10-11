@@ -6,9 +6,7 @@ global.ContentService = {
   createTextOutput: (variable) => variable,
 };
 
-
 describe("`/dabei` command", function () {
-
   it("should return Tuesday when being in #training-dienstag channel", function () {
     global.SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
@@ -22,8 +20,6 @@ describe("`/dabei` command", function () {
         }),
       }),
     };
-
-
     const requestData = {
       parameter: {
         user_name: "wolfgang",
@@ -37,15 +33,14 @@ describe("`/dabei` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
     let returnValue = participate(requestData);
 
-
-
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag"));
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag"));
     }
+    assert.equal(returnValue[1], true);
   });
 
   it("should say you're already participating on Tuesday's", function () {
@@ -78,11 +73,12 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
-      assert.equal(returnValue, createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, "Dienstag"));
+      assert.equal(returnValue[0], createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, "Dienstag"));
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.equal(returnValue, createdExpectedOutputForAlreadyParticipating(thisWeeksTuesday, "Dienstag"));
+      assert.equal(returnValue[0], createdExpectedOutputForAlreadyParticipating(thisWeeksTuesday, "Dienstag"));
     }
+    assert.equal(returnValue[1], false);
   })
 
   it("should return Thursday when being in #training-donnerstag channel", function () {
@@ -115,11 +111,12 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksThursday < Date.now()) {
       console.log("Expect next weeks Thursday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag"));
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag"));
     }
+    assert.equal(returnValue[1], true);
   });
 
   it("should return Saturday when being in #training-saturday channel", function () {
@@ -151,11 +148,12 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag"));
     } else {
       console.log("Expect this weeks Saturday");
-      assert.equal(returnValue, createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag"));
+      assert.equal(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag"));
     }
+    assert.equal(returnValue[1], true);
   });
 });
 
@@ -165,14 +163,14 @@ function getThisWeeksDay(plusOneWeek, dayConstant) {
   const dayOfTheWeek = date.getDay();
   let newDate = new Date(date.setDate(today - dayOfTheWeek + dayConstant));
 
-  if (plusOneWeek) {
-    const nextWeeksTraining = new Date(newDate);
-    newDate = new Date(
-      nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7)
-    );
+  if (!plusOneWeek) {
+    return newDate;
   }
 
-  return newDate;
+  const nextWeeksTraining = new Date(newDate);
+  return new Date(
+    nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7)
+  );
 }
 
 function createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, day) {

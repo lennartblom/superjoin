@@ -10,6 +10,10 @@ function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, use
   return spreadsheetName;
 }
 
+function generateResultMessage(output, newParticipant) {
+  return [output, newParticipant];
+}
+
 function saveNewTrainingAttendeeToSpreadSheet(
   channelId,
   spreadsheetApp,
@@ -20,11 +24,12 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
   if (spreadsheet == null) {
-    return createSpreadsheetAndAddParticipant(
+    const output = createSpreadsheetAndAddParticipant(
       spreadsheetApp,
       spreadsheetName,
       userName
     );
+    return generateResultMessage(output, true);
   }
 
   let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
@@ -36,12 +41,14 @@ function saveNewTrainingAttendeeToSpreadSheet(
   });
 
   if (alreadyInList) {
-    return "Du bist schon beim Training " + spreadsheetName +
+    const output = "Du bist schon beim Training " + spreadsheetName +
       " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
+    return generateResultMessage(output, false);
   }
   addParticipantToSpreadsheet(spreadsheet, userName);
 
-  return "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
+  let output = "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
+  return generateResultMessage(output, true);
 }
 
 function newSheet(spreadsheetApp, sheetName) {
