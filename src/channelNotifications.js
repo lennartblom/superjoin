@@ -1,12 +1,16 @@
 const {TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID} = require("./crossDomain");
-const {TUESDAY_WEBHOOK_URL,
-  THURSDAY_WEBHOOK_URL,
-  SATURDAY_WEBHOOK_URL,
-  TEST_WEBHOOK_URL} = require("./secrets")
+const {TUESDAY_WEBHOOK_URL, THURSDAY_WEBHOOK_URL, SATURDAY_WEBHOOK_URL} = require("./secrets")
 
-const TUESDAY_CHANNEL_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
-const THURSDAY_CHANNEL_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/THURSDAY";
-const SATURDAY_CHANNEL_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
+function notifyAboutParticipant(e) {
+  if (typeof e === "undefined") {
+    return;
+  }
+
+  const channelId = e.parameter.channel_id;
+  const userName = e.parameter.user_name;
+
+  notifyChannelAboutNewParticipant(channelId, userName);
+}
 
 function notifyChannelAboutNewParticipant(channelId, participant) {
   const channelWebHookUrl = getChannelWebhook(channelId);
@@ -28,13 +32,13 @@ function notifyChannelAboutNewParticipant(channelId, participant) {
 function getChannelWebhook(channelId) {
   switch (channelId) {
     case TUESDAY_CHANNEL_ID: {
-      return TUESDAY_CHANNEL_URL;
+      return TUESDAY_WEBHOOK_URL;
     }
     case THURSDAY_CHANNEL_ID: {
-      return THURSDAY_CHANNEL_URL;
+      return THURSDAY_WEBHOOK_URL;
     }
     case SATURDAY_CHANNEL_ID: {
-      return SATURDAY_CHANNEL_URL;
+      return SATURDAY_WEBHOOK_URL;
     }
     default: {
       return null;
@@ -42,7 +46,10 @@ function getChannelWebhook(channelId) {
   }
 }
 
-module.exports = notifyChannelAboutNewParticipant;
+module.exports = {
+  notifyChannelAboutNewParticipant: notifyChannelAboutNewParticipant,
+  notifyAboutParticipant: notifyAboutParticipant,
+};
 
 exports._test = {
   notifyChannelAboutNewParticipant: notifyChannelAboutNewParticipant,

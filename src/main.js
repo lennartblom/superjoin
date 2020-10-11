@@ -1,5 +1,6 @@
 const participate = require("./participate");
 const listParticipants = require("./listParticipants");
+const {notifyAboutParticipant} = require("./channelNotifications")
 
 const PARTICIPATE_COMMAND = "/dabei";
 const LIST_PARTICIPANTS_COMMAND = "/teilnehmer";
@@ -18,6 +19,7 @@ function doPost(e) {
     case PARTICIPATE_COMMAND: {
       textOutput = participate(e);
       textOutput = textOutput + listParticipants(e);
+      notifyAboutParticipant(e);
       break;
     }
     case LIST_PARTICIPANTS_COMMAND: {
