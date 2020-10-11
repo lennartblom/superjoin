@@ -1,4 +1,8 @@
 const {TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID} = require("./crossDomain");
+const {TUESDAY_WEBHOOK_URL,
+  THURSDAY_WEBHOOK_URL,
+  SATURDAY_WEBHOOK_URL,
+  TEST_WEBHOOK_URL} = require("./secrets")
 
 const TUESDAY_CHANNEL_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
 const THURSDAY_CHANNEL_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/THURSDAY";
