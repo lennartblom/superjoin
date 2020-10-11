@@ -93,4 +93,8 @@ function trainingDayForChannelId(channelId) {
     }
 }
 
-module.exports = getSpreadsheetName;
+exports.getSpreadsheetName = getSpreadsheetName;
+exports.TUESDAY_CHANNEL_ID = TUESDAY_CHANNEL_ID;
+exports.THURSDAY_CHANNEL_ID = THURSDAY_CHANNEL_ID;
+exports.SATURDAY_CHANNEL_ID = SATURDAY_CHANNEL_ID;
+

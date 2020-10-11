@@ -1,4 +1,4 @@
-const getSpreadsheetName = require("./crossDomain");
+const {getSpreadsheetName} = require("./crossDomain");
 
 function addParticipantToSpreadsheet(newSpreadsheet, userName) {
   newSpreadsheet.appendRow([userName, new Date().toISOString()]);
