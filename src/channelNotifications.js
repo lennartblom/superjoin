@@ -1,5 +1,10 @@
-const {TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID} = require("./crossDomain");
-const {TUESDAY_WEBHOOK_URL, THURSDAY_WEBHOOK_URL, SATURDAY_WEBHOOK_URL} = require("./secrets")
+const {} = require("./crossDomain");
+const {
+  MONDAY_CHANNEL_ID, TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID, SUNDAY_CHANNEL_ID
+} = require("./crossDomain");
+const {
+  MONDAY_WEBHOOK_URL, TUESDAY_WEBHOOK_URL, THURSDAY_WEBHOOK_URL, SATURDAY_WEBHOOK_URL, SUNDAY_WEBHOOK_URL
+} = require("./secrets")
 
 function notifyAboutParticipant(e) {
   if (typeof e === "undefined") {
@@ -34,6 +39,9 @@ function notifyChannelAboutNewParticipant(channelId, participant) {
 
 function getChannelWebhook(channelId) {
   switch (channelId) {
+    case MONDAY_CHANNEL_ID: {
+      return MONDAY_WEBHOOK_URL;
+    }
     case TUESDAY_CHANNEL_ID: {
       return TUESDAY_WEBHOOK_URL;
     }
@@ -42,6 +50,9 @@ function getChannelWebhook(channelId) {
     }
     case SATURDAY_CHANNEL_ID: {
       return SATURDAY_WEBHOOK_URL;
+    }
+    case SUNDAY_CHANNEL_ID: {
+      return SUNDAY_WEBHOOK_URL;
     }
     default: {
       return null;
