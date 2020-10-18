@@ -21,7 +21,7 @@ function participate(e) {
 }
 
 function addParticipantToSpreadsheet(newSpreadsheet, userName, userId) {
-  newSpreadsheet.appendRow([userName, new Date().toISOString()]);
+  newSpreadsheet.appendRow([userName, userId, new Date().toISOString()]);
 }
 
 function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, userName, userId) {
@@ -57,7 +57,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
   let alreadyInList = false;
   upcomingTrainingParticipants.forEach(function (row) {
-    if(row[0] === userName) {
+    if(row[1] === userId) {
       alreadyInList = true;
     }
   });
