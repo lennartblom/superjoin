@@ -29,7 +29,7 @@ describe("`/teilnehmer` command", function () {
 
         let returnValue = listParticipants(requestData);
 
-        assert.equal(returnValue, EXPECTED_VALUE_TWO_PARTICIPANTS);
+        assert.strictEqual(returnValue.endsWith(EXPECTED_VALUE_TWO_PARTICIPANTS), true);
     });
 
     it("should return 3 participants of spreadsheet data", function () {
@@ -55,22 +55,47 @@ describe("`/teilnehmer` command", function () {
 
         let returnValue = listParticipants(requestData);
 
-        assert.equal(returnValue, EXPECTED_VALUE_THREE_PARTICIPANTS);
+        assert.strictEqual(returnValue.endsWith(EXPECTED_VALUE_THREE_PARTICIPANTS), true);
+    });
+    it("should return no participants at all", function () {
+        global.SpreadsheetApp = {
+            getActiveSpreadsheet: () => ({
+                getSheetByName: () => ({
+                    getDataRange: () => ({
+                        getValues: () => [
+                            [""]
+                        ]
+                    }),
+                }),
+            }),
+        };
+        const requestData = {
+            parameter: {
+                user_name: {},
+                command: "/teilnehmer",
+                channel_id: "C012C7UEX9C",
+                channel_name: "training-dienstag",
+            },
+        };
+
+        let returnValue = listParticipants(requestData);
+
+        assert.strictEqual(returnValue.endsWith(EXPECTED_VALUE_NO_PARTICIPANTS), true);
     });
 });
 
-
 const EXPECTED_VALUE_TWO_PARTICIPANTS = '\n' +
-    ':eilbeck: *Trainingsteilnehmer am `Dienstag 13.10.2020`* :page_with_curl:\n' +
     '```\n' +
     '• max musterman\n' +
     '• alina musterfrau\n' +
     '```';
 
 const EXPECTED_VALUE_THREE_PARTICIPANTS = '\n' +
-  ':eilbeck: *Trainingsteilnehmer am `Dienstag 13.10.2020`* :page_with_curl:\n' +
   '```\n' +
   '• max musterman\n' +
   '• klaus störtebecker\n' +
   '• alina musterfrau\n' +
   '```';
+
+const EXPECTED_VALUE_NO_PARTICIPANTS = '\n' +
+  'Bislang hat sich noch niemand angemeldet, also starte durch mit `/dabei`! :rocket:';

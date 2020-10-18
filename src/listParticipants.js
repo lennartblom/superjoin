@@ -11,10 +11,20 @@ function listParticipants(e) {
 
   let trainingSpreadSheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
-  const participantsRows = trainingSpreadSheet.getDataRange().getValues();
-
   let participantsOutput = initializeWithTrainingHeadline(spreadsheetName);
-  participantsOutput = addStartingCodeSection(participantsOutput);
+
+  let participants = readParticipantsFromSpreadsheet(trainingSpreadSheet);
+
+  return printOutParticipants(participants, participantsOutput);
+}
+
+function readParticipantsFromSpreadsheet(trainingSpreadSheet) {
+  if (trainingSpreadSheet == null) {
+    return [];
+  }
+
+  const participantsRows = trainingSpreadSheet.getDataRange().getValues();
+  let participants = [];
   let skipFirstRow = true;
   participantsRows.forEach(function (row) {
     if (skipFirstRow) {
@@ -22,29 +32,48 @@ function listParticipants(e) {
       return;
     }
 
-    participantsOutput = addParticipantLine(row, participantsOutput);
+    addParticipant(row, participants);
   });
+  return participants;
+}
 
-  participantsOutput = addEndingCodeSection(participantsOutput);
+function printOutParticipants(participants, participantsOutput) {
+  if (participants.length > 0) {
+    participantsOutput = addParticipantsToOutput(participants, participantsOutput);
+  } else {
+    participantsOutput += 'Bislang hat sich noch niemand angemeldet, also starte durch mit `/dabei`! :rocket:';
+  }
   return participantsOutput;
+}
+
+function addParticipant(row, participants) {
+  const participant = row[0];
+  participants.push(participant);
+}
+
+function addParticipantsToOutput(participants, participantsOutput) {
+  participantsOutput = addEndingCodeSection(participantsOutput, true);
+
+  participants.forEach(function (participant) {
+    const participantEntry = "• " + participant;
+    participantsOutput = participantsOutput + participantEntry + "\n";
+  })
+
+  participantsOutput = addEndingCodeSection(participantsOutput, false);
+
+  return participantsOutput;
+}
+
+function addEndingCodeSection(participantsOutput, endingLinebreak) {
+  if (endingLinebreak) {
+    return participantsOutput + "```\n";
+  } else {
+    return participantsOutput + "```";
+  }
 }
 
 function initializeWithTrainingHeadline(spreadsheetName) {
   return "\n:eilbeck: *Trainingsteilnehmer am `" + spreadsheetName + "`* :page_with_curl:\n";
-}
-
-function addStartingCodeSection(participantsOutput) {
-  return participantsOutput + "```\n";
-}
-
-function addParticipantLine(row, participantsOutput) {
-  const participantEntry = "• " + row[0];
-  participantsOutput = participantsOutput + participantEntry + "\n";
-  return participantsOutput;
-}
-
-function addEndingCodeSection(participantsOutput) {
-  return participantsOutput + "```";
 }
 
 module.exports = {
