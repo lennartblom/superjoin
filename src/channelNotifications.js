@@ -1,3 +1,4 @@
+const {getUserName} = require("./getUserName");
 const {} = require("./crossDomain");
 const {
   MONDAY_CHANNEL_ID, TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID, SUNDAY_CHANNEL_ID
@@ -12,7 +13,7 @@ function notifyAboutParticipant(e) {
   }
 
   const channelId = e.parameter.channel_id;
-  const userName = e.parameter.user_name;
+  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
 
   notifyChannelAboutNewParticipant(channelId, userName);
 }
