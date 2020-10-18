@@ -14,7 +14,7 @@ describe("'/austragen' command", function () {
           }),
           deleteRow: function (index) {
             console.log("Called with index", index)
-            assert.equal(index, 2);
+            assert.strictEqual(index, 2);
           }
         }),
       }),
@@ -30,8 +30,8 @@ describe("'/austragen' command", function () {
 
     let result = signOut(requestData);
 
-    assert.equal(result[1], true);
-    assert.equal(result[0], "Du hast dich erfolgreich vom Training abgemeldet");
+    assert.strictEqual(result[1], true);
+    assert.strictEqual(result[0], "Du hast dich erfolgreich vom Training abgemeldet");
   });
   it("should ignore command when is not in spreadsheet", function () {
     global.SpreadsheetApp = {
@@ -42,7 +42,7 @@ describe("'/austragen' command", function () {
               [""], ["max musterman", 1337], ["alina musterfrau", 1337]
             ]
           }),
-          deleteRow: function (index) {
+          deleteRow: function () {
             assert.fail("Row must not be deleted")
           }
         }),
@@ -59,7 +59,7 @@ describe("'/austragen' command", function () {
 
     let result = signOut(requestData);
 
-    assert.equal(result[1], false);
-    assert.equal(result[0], "Du bist gar nicht beim Training angemeldet");
+    assert.strictEqual(result[1], false);
+    assert.strictEqual(result[0], "Du bist gar nicht beim Training angemeldet");
   });
 });
