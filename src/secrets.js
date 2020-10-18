@@ -1,9 +1,15 @@
-const MONDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
-const TUESDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
-const THURSDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/THURSDAY";
-const SATURDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
-const SUNDAY_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
-const TEST_WEBHOOK_URL = "https://hooks.slack.com/services/asdasdas/asdasdasd/TEST";
+const MONDAY_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
+const TUESDAY_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/TUESDAY";
+const THURSDAY_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/THURSDAY";
+const SATURDAY_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
+const SUNDAY_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/SATURDAY";
+const TEST_WEBHOOK_URL =
+  "https://hooks.slack.com/services/asdasdas/asdasdasd/TEST";
 const BOT_ACCESS_TOKEN = "xoxb-test";
 
 module.exports = {
@@ -13,5 +19,5 @@ module.exports = {
   SATURDAY_WEBHOOK_URL: SATURDAY_WEBHOOK_URL,
   SUNDAY_WEBHOOK_URL: SUNDAY_WEBHOOK_URL,
   TEST_WEBHOOK_URL: TEST_WEBHOOK_URL,
-  BOT_ACCESS_TOKEN: BOT_ACCESS_TOKEN
-}
+  BOT_ACCESS_TOKEN: BOT_ACCESS_TOKEN,
+};

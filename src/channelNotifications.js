@@ -1,11 +1,19 @@
 const {getUserName} = require("./getUserName");
 const {} = require("./crossDomain");
 const {
-  MONDAY_CHANNEL_ID, TUESDAY_CHANNEL_ID, THURSDAY_CHANNEL_ID, SATURDAY_CHANNEL_ID, SUNDAY_CHANNEL_ID
+  MONDAY_CHANNEL_ID,
+  TUESDAY_CHANNEL_ID,
+  THURSDAY_CHANNEL_ID,
+  SATURDAY_CHANNEL_ID,
+  SUNDAY_CHANNEL_ID,
 } = require("./crossDomain");
 const {
-  MONDAY_WEBHOOK_URL, TUESDAY_WEBHOOK_URL, THURSDAY_WEBHOOK_URL, SATURDAY_WEBHOOK_URL, SUNDAY_WEBHOOK_URL
-} = require("./secrets")
+  MONDAY_WEBHOOK_URL,
+  TUESDAY_WEBHOOK_URL,
+  THURSDAY_WEBHOOK_URL,
+  SATURDAY_WEBHOOK_URL,
+  SUNDAY_WEBHOOK_URL,
+} = require("./secrets");
 
 function notifyAboutParticipant(e) {
   if (typeof e === "undefined") {
@@ -25,13 +33,16 @@ function notifyChannelAboutNewParticipant(channelId, participant) {
     return 404;
   }
   let requestOptions = {
-    'method': 'post',
-    'headers': {
-      'Content-type': 'application/json'
+    method: "post",
+    headers: {
+      "Content-type": "application/json",
     },
-    'payload': JSON.stringify({
-      'text': ":heavy_plus_sign: `" + participant + "` hat sich zum nächsten Training angemeldet!"
-    })
+    payload: JSON.stringify({
+      text:
+        ":heavy_plus_sign: `" +
+        participant +
+        "` hat sich zum nächsten Training angemeldet!",
+    }),
   };
   UrlFetchApp.fetch(channelWebHookUrl, requestOptions);
 
@@ -68,4 +79,4 @@ module.exports = {
 
 exports._test = {
   notifyChannelAboutNewParticipant: notifyChannelAboutNewParticipant,
-}
+};

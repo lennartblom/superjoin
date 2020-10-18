@@ -6,7 +6,6 @@ Run the /dabei command in one of the configured channels (training-dienstag, tra
 
 [Google Sheet](https://docs.google.com/spreadsheets/d/1DaWmSCXBWlh8RdJsn8WMOCnJlxJj6rucwDRYiLMHutg/edit#gid=0)
 
-
 ## The slack message structure
 
 example payload of a command post message
