@@ -16,9 +16,9 @@ function getUserName(nickname, userId) {
 }
 
 module.exports = {
-  getUserName: getUserName
+  getUserName: getUserName,
 };
 
 exports._test = {
-  getUserName: getUserName
+  getUserName: getUserName,
 };

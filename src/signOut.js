@@ -1,5 +1,5 @@
-const {getUserName} = require("./getUserName");
-const {getSpreadsheetName} = require("./crossDomain");
+const { getUserName } = require("./getUserName");
+const { getSpreadsheetName } = require("./crossDomain");
 
 function signOut(e) {
   if (typeof e === "undefined") {
@@ -14,7 +14,10 @@ function signOut(e) {
 
   let trainingSpreadSheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
-  const participantsRowIndex = getParticipantsRowIndex(trainingSpreadSheet, userId);
+  const participantsRowIndex = getParticipantsRowIndex(
+    trainingSpreadSheet,
+    userId
+  );
   if (participantsRowIndex < 0) {
     return ["Du bist gar nicht beim Training angemeldet", false];
   }
@@ -39,5 +42,5 @@ function getParticipantsRowIndex(trainingSpreadSheet, userId) {
 }
 
 module.exports = {
-  signOut: signOut
-}
+  signOut: signOut,
+};

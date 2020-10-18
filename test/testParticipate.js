@@ -1,13 +1,11 @@
 const assert = require("assert");
 const participate = require("../src/participate");
 
-
 global.ContentService = {
   createTextOutput: (variable) => variable,
 };
 
 describe("`/dabei` command", function () {
-
   it("should return Monday when being in #training-montag channel", function () {
     global.SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
@@ -15,8 +13,10 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
@@ -38,10 +38,16 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Montag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Montag")
+      );
     } else {
       console.log("Expect this weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Montag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Montag")
+      );
     }
     assert.strictEqual(returnValue[1], true);
   });
@@ -52,8 +58,10 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
@@ -74,10 +82,16 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag")
+      );
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag")
+      );
     }
     assert.strictEqual(returnValue[1], true);
   });
@@ -88,13 +102,14 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
     };
-
 
     const e = {
       parameter: {
@@ -112,10 +127,16 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksThursday < Date.now()) {
       console.log("Expect next weeks Thursday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag")
+      );
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag")
+      );
     }
     assert.strictEqual(returnValue[1], true);
   });
@@ -127,8 +148,10 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
@@ -150,10 +173,16 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag")
+      );
     } else {
       console.log("Expect this weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag")
+      );
     }
     assert.strictEqual(returnValue[1], true);
   });
@@ -164,8 +193,10 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
@@ -187,10 +218,16 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Sonntag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Sonntag")
+      );
     } else {
       console.log("Expect this weeks Saturday");
-      assert.strictEqual(returnValue[0], createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Sonntag"));
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Sonntag")
+      );
     }
     assert.strictEqual(returnValue[1], true);
   });
@@ -201,13 +238,14 @@ describe("`/dabei` command", function () {
           appendRow: () => ({}),
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max mustermann", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max mustermann", "a_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
           }),
         }),
       }),
     };
-
 
     const requestData = {
       parameter: {
@@ -225,13 +263,25 @@ describe("`/dabei` command", function () {
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
-      assert.strictEqual(returnValue[0], createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, "Dienstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createdExpectedOutputForAlreadyParticipating(
+          nextWeeksTuesday,
+          "Dienstag"
+        )
+      );
     } else {
       console.log("Expect this weeks Tuesday");
-      assert.strictEqual(returnValue[0], createdExpectedOutputForAlreadyParticipating(thisWeeksTuesday, "Dienstag"));
+      assert.strictEqual(
+        returnValue[0],
+        createdExpectedOutputForAlreadyParticipating(
+          thisWeeksTuesday,
+          "Dienstag"
+        )
+      );
     }
     assert.strictEqual(returnValue[1], false);
-  })
+  });
 });
 
 function getThisWeeksDay(plusOneWeek, dayConstant) {
@@ -245,21 +295,27 @@ function getThisWeeksDay(plusOneWeek, dayConstant) {
   }
 
   const nextWeeksTraining = new Date(newDate);
-  return new Date(
-    nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7)
-  );
+  return new Date(nextWeeksTraining.setDate(nextWeeksTraining.getDate() + 7));
 }
 
 function createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, day) {
-  return "Du bist schon beim Training " + day + " " +
+  return (
+    "Du bist schon beim Training " +
+    day +
+    " " +
     getDateInGermanFormat(nextWeeksTuesday) +
-    " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
+    " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: "
+  );
 }
 
 function createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, day) {
-  return "Du bist beim Training am " + day + " " +
+  return (
+    "Du bist beim Training am " +
+    day +
+    " " +
     getDateInGermanFormat(nextWeeksTuesday) +
-    " dabei :confetti_ball:";
+    " dabei :confetti_ball:"
+  );
 }
 
 function getDateInGermanFormat(newDate) {

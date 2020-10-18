@@ -1,5 +1,5 @@
-const {getSpreadsheetName} = require("./crossDomain");
-const {getUserName} = require("./getUserName");
+const { getSpreadsheetName } = require("./crossDomain");
+const { getUserName } = require("./getUserName");
 
 function participate(e) {
   if (typeof e === "undefined") {
@@ -24,7 +24,12 @@ function addParticipantToSpreadsheet(newSpreadsheet, userName, userId) {
   newSpreadsheet.appendRow([userName, userId, new Date().toISOString()]);
 }
 
-function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, userName, userId) {
+function createSpreadsheetAndAddParticipant(
+  spreadsheetApp,
+  spreadsheetName,
+  userName,
+  userId
+) {
   const newSpreadsheet = newSheet(spreadsheetApp, spreadsheetName);
   addParticipantToSpreadsheet(newSpreadsheet, userName, userId);
   return spreadsheetName;
@@ -40,7 +45,6 @@ function saveNewTrainingAttendeeToSpreadSheet(
   userName,
   userId
 ) {
-
   let spreadsheetName = getSpreadsheetName(channelId);
   let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
@@ -57,19 +61,22 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
   let alreadyInList = false;
   upcomingTrainingParticipants.forEach(function (row) {
-    if(row[1] === userId) {
+    if (row[1] === userId) {
       alreadyInList = true;
     }
   });
 
   if (alreadyInList) {
-    const output = "Du bist schon beim Training " + spreadsheetName +
+    const output =
+      "Du bist schon beim Training " +
+      spreadsheetName +
       " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
     return generateResultMessage(output, false);
   }
   addParticipantToSpreadsheet(spreadsheet, userName, userId);
 
-  let output = "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
+  let output =
+    "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
   return generateResultMessage(output, true);
 }
 

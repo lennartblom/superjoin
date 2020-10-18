@@ -1,4 +1,4 @@
-const {getSpreadsheetName} = require("./crossDomain");
+const { getSpreadsheetName } = require("./crossDomain");
 
 function listParticipants(e) {
   if (typeof e === "undefined") {
@@ -39,9 +39,13 @@ function readParticipantsFromSpreadsheet(trainingSpreadSheet) {
 
 function printOutParticipants(participants, participantsOutput) {
   if (participants.length > 0) {
-    participantsOutput = addParticipantsToOutput(participants, participantsOutput);
+    participantsOutput = addParticipantsToOutput(
+      participants,
+      participantsOutput
+    );
   } else {
-    participantsOutput += 'Bislang hat sich noch niemand angemeldet, also starte durch mit `/dabei`! :rocket:';
+    participantsOutput +=
+      "Bislang hat sich noch niemand angemeldet, also starte durch mit `/dabei`! :rocket:";
   }
   return participantsOutput;
 }
@@ -57,7 +61,7 @@ function addParticipantsToOutput(participants, participantsOutput) {
   participants.forEach(function (participant) {
     const participantEntry = "• " + participant;
     participantsOutput = participantsOutput + participantEntry + "\n";
-  })
+  });
 
   participantsOutput = addEndingCodeSection(participantsOutput, false);
 
@@ -73,11 +77,15 @@ function addEndingCodeSection(participantsOutput, endingLinebreak) {
 }
 
 function initializeWithTrainingHeadline(spreadsheetName) {
-  return "\n:eilbeck: *Trainingsteilnehmer am `" + spreadsheetName + "`* :page_with_curl:\n";
+  return (
+    "\n:eilbeck: *Trainingsteilnehmer am `" +
+    spreadsheetName +
+    "`* :page_with_curl:\n"
+  );
 }
 
 module.exports = {
-  listParticipants: listParticipants
+  listParticipants: listParticipants,
 };
 
 exports._test = {

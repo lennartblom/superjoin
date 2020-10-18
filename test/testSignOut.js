@@ -1,6 +1,5 @@
-const assert = require("assert")
-const {signOut} = require("../src/signOut")
-
+const assert = require("assert");
+const { signOut } = require("../src/signOut");
 
 describe("'/austragen' command", function () {
   it("should signOut participant when in spreadsheet", function () {
@@ -9,13 +8,15 @@ describe("'/austragen' command", function () {
         getSheetByName: () => ({
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max musterman", "a_user_ID", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max musterman", "a_user_ID", 1337],
+              ["alina musterfrau", 1337],
+            ],
           }),
           deleteRow: function (index) {
-            console.log("Called with index", index)
+            console.log("Called with index", index);
             assert.strictEqual(index, 2);
-          }
+          },
         }),
       }),
     };
@@ -32,7 +33,10 @@ describe("'/austragen' command", function () {
     let result = signOut(requestData);
 
     assert.strictEqual(result[1], true);
-    assert.strictEqual(result[0], "Du hast dich erfolgreich vom Training abgemeldet");
+    assert.strictEqual(
+      result[0],
+      "Du hast dich erfolgreich vom Training abgemeldet"
+    );
   });
   it("should ignore command when is not in spreadsheet", function () {
     global.SpreadsheetApp = {
@@ -40,12 +44,14 @@ describe("'/austragen' command", function () {
         getSheetByName: () => ({
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max musterman", "a_user_ID", 1337], ["alina musterfrau", 1337]
-            ]
+              [""],
+              ["max musterman", "a_user_ID", 1337],
+              ["alina musterfrau", 1337],
+            ],
           }),
           deleteRow: function () {
-            assert.fail("Row must not be deleted")
-          }
+            assert.fail("Row must not be deleted");
+          },
         }),
       }),
     };
