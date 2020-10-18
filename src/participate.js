@@ -10,21 +10,23 @@ function participate(e) {
 
   const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
   const channelId = e.parameter.channel_id;
+  const userId = e.parameter.user_id;
 
   return saveNewTrainingAttendeeToSpreadSheet(
     channelId,
     spreadsheetApp,
-    userName
+    userName,
+    userId
   );
 }
 
-function addParticipantToSpreadsheet(newSpreadsheet, userName) {
+function addParticipantToSpreadsheet(newSpreadsheet, userName, userId) {
   newSpreadsheet.appendRow([userName, new Date().toISOString()]);
 }
 
-function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, userName) {
+function createSpreadsheetAndAddParticipant(spreadsheetApp, spreadsheetName, userName, userId) {
   const newSpreadsheet = newSheet(spreadsheetApp, spreadsheetName);
-  addParticipantToSpreadsheet(newSpreadsheet, userName);
+  addParticipantToSpreadsheet(newSpreadsheet, userName, userId);
   return spreadsheetName;
 }
 
@@ -35,7 +37,8 @@ function generateResultMessage(output, newParticipant) {
 function saveNewTrainingAttendeeToSpreadSheet(
   channelId,
   spreadsheetApp,
-  userName
+  userName,
+  userId
 ) {
 
   let spreadsheetName = getSpreadsheetName(channelId);
@@ -45,7 +48,8 @@ function saveNewTrainingAttendeeToSpreadSheet(
     const output = createSpreadsheetAndAddParticipant(
       spreadsheetApp,
       spreadsheetName,
-      userName
+      userName,
+      userId
     );
     return generateResultMessage(output, true);
   }
@@ -63,7 +67,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
       " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
     return generateResultMessage(output, false);
   }
-  addParticipantToSpreadsheet(spreadsheet, userName);
+  addParticipantToSpreadsheet(spreadsheet, userName, userId);
 
   let output = "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
   return generateResultMessage(output, true);
@@ -72,7 +76,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
 function newSheet(spreadsheetApp, sheetName) {
   const sheet = spreadsheetApp.insertSheet(sheetName);
 
-  return sheet.appendRow(["Name", "Eingetragen um"]);
+  return sheet.appendRow(["Name", "ID", "Eingetragen um"]);
 }
 
 module.exports = participate;

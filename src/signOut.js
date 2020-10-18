@@ -7,14 +7,14 @@ function signOut(e) {
   }
 
   const channelId = e.parameter.channel_id;
-  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
+  const userId = e.parameter.user_id;
   const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
 
   let spreadsheetName = getSpreadsheetName(channelId);
 
   let trainingSpreadSheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
-  const participantsRowIndex = getParticipantsRowIndex(trainingSpreadSheet, userName);
+  const participantsRowIndex = getParticipantsRowIndex(trainingSpreadSheet, userId);
   if (participantsRowIndex < 0) {
     return ["Du bist gar nicht beim Training angemeldet", false];
   }
@@ -22,13 +22,13 @@ function signOut(e) {
   return ["Du hast dich erfolgreich vom Training abgemeldet", true];
 }
 
-function getParticipantsRowIndex(trainingSpreadSheet, userName) {
+function getParticipantsRowIndex(trainingSpreadSheet, userId) {
   const participantsRows = trainingSpreadSheet.getDataRange().getValues();
 
   let counter = 0;
   let indexToFind = -1;
   participantsRows.forEach(function (row) {
-    if (row[0] === userName) {
+    if (row[1] === userId) {
       indexToFind = counter;
     }
 

@@ -9,7 +9,7 @@ describe("'/austragen' command", function () {
         getSheetByName: () => ({
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max musterman", 1337], ["alina musterfrau", 1337]
+              [""], ["max musterman", "a_user_ID", 1337], ["alina musterfrau", 1337]
             ]
           }),
           deleteRow: function (index) {
@@ -40,7 +40,7 @@ describe("'/austragen' command", function () {
         getSheetByName: () => ({
           getDataRange: () => ({
             getValues: () => [
-              [""], ["max musterman", 1337], ["alina musterfrau", 1337]
+              [""], ["max musterman", "a_user_ID", 1337], ["alina musterfrau", 1337]
             ]
           }),
           deleteRow: function () {
@@ -52,7 +52,7 @@ describe("'/austragen' command", function () {
     const requestData = {
       parameter: {
         user_name: "peter.nicht.angemeldet",
-        user_id: "a_user_ID",
+        user_id: "not_listed_user_ID",
         command: "/teilnehmer",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",
