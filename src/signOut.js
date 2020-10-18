@@ -1,3 +1,4 @@
+const {getUserName} = require("./getUserName");
 const {getSpreadsheetName} = require("./crossDomain");
 
 function signOut(e) {
@@ -6,7 +7,7 @@ function signOut(e) {
   }
 
   const channelId = e.parameter.channel_id;
-  const userName = e.parameter.user_name;
+  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
   const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
 
   let spreadsheetName = getSpreadsheetName(channelId);

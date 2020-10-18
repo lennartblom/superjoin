@@ -22,6 +22,7 @@ describe("'/austragen' command", function () {
     const requestData = {
       parameter: {
         user_name: "max musterman",
+        user_id: "a_user_ID",
         command: "/teilnehmer",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",
@@ -51,6 +52,7 @@ describe("'/austragen' command", function () {
     const requestData = {
       parameter: {
         user_name: "peter.nicht.angemeldet",
+        user_id: "a_user_ID",
         command: "/teilnehmer",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",

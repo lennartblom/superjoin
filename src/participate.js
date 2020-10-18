@@ -1,4 +1,22 @@
 const {getSpreadsheetName} = require("./crossDomain");
+const {getUserName} = require("./getUserName");
+
+function participate(e) {
+  if (typeof e === "undefined") {
+    return;
+  }
+
+  const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
+
+  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
+  const channelId = e.parameter.channel_id;
+
+  return saveNewTrainingAttendeeToSpreadSheet(
+    channelId,
+    spreadsheetApp,
+    userName
+  );
+}
 
 function addParticipantToSpreadsheet(newSpreadsheet, userName) {
   newSpreadsheet.appendRow([userName, new Date().toISOString()]);
@@ -55,23 +73,6 @@ function newSheet(spreadsheetApp, sheetName) {
   const sheet = spreadsheetApp.insertSheet(sheetName);
 
   return sheet.appendRow(["Name", "Eingetragen um"]);
-}
-
-function participate(e) {
-  if (typeof e === "undefined") {
-    return;
-  }
-
-  const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
-
-  const userName = e.parameter.user_name;
-  const channelId = e.parameter.channel_id;
-
-  return saveNewTrainingAttendeeToSpreadSheet(
-    channelId,
-    spreadsheetApp,
-    userName
-  );
 }
 
 module.exports = participate;
