@@ -25,6 +25,7 @@ describe("`/dabei` command", function () {
     const e = {
       parameter: {
         user_name: "wolfgang",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C01BXQKR9KM",
         channel_name: "training-samstag",
@@ -60,6 +61,7 @@ describe("`/dabei` command", function () {
     const requestData = {
       parameter: {
         user_name: "wolfgang",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",
@@ -97,6 +99,7 @@ describe("`/dabei` command", function () {
     const e = {
       parameter: {
         user_name: "Wolfgang",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C012K00AJFL",
         channel_name: "training-donnerstag",
@@ -134,6 +137,7 @@ describe("`/dabei` command", function () {
     const e = {
       parameter: {
         user_name: "wolfgang",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C012C7UQPSS",
         channel_name: "training-samstag",
@@ -170,6 +174,7 @@ describe("`/dabei` command", function () {
     const e = {
       parameter: {
         user_name: "wolfgang",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C01D7L86K8Q",
         channel_name: "training-samstag",
@@ -207,6 +212,7 @@ describe("`/dabei` command", function () {
     const requestData = {
       parameter: {
         user_name: "max mustermann",
+        user_id: "a_user_ID",
         command: "/dabei",
         channel_id: "C012C7UEX9C",
         channel_name: "training-dienstag",

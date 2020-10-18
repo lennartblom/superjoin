@@ -1,4 +1,5 @@
 const {getSpreadsheetName} = require("./crossDomain");
+const {getUserName} = require("./getUserName");
 
 function addParticipantToSpreadsheet(newSpreadsheet, userName) {
   newSpreadsheet.appendRow([userName, new Date().toISOString()]);
@@ -64,7 +65,7 @@ function participate(e) {
 
   const spreadsheetApp = SpreadsheetApp.getActiveSpreadsheet();
 
-  const userName = e.parameter.user_name;
+  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
   const channelId = e.parameter.channel_id;
 
   return saveNewTrainingAttendeeToSpreadSheet(
