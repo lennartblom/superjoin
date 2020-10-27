@@ -33,7 +33,7 @@ function notifyAboutGuest(e) {
 
   const channelId = e.parameter.channel_id;
   const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
-  const guestName = e.text;
+  const guestName = e.parameter.text;
 
   notifyChannelAboutNewParticipant(channelId, userName, guestName);
 }
