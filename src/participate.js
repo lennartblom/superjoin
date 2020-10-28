@@ -21,27 +21,27 @@ function participate(e) {
     userId
   );
 
+  function generateSuccessMessage(spreadsheetName) {
+    return [
+      "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:",
+      true,
+    ];
+  }
+
+  function generateFailureMessage(spreadsheetName) {
+    return [
+      "Du bist schon beim Training " +
+        spreadsheetName +
+        " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ",
+      false,
+    ];
+  }
+
   if (addedToSpreadsheet[1]) {
     return generateSuccessMessage(addedToSpreadsheet[0]);
   } else {
     return generateFailureMessage(addedToSpreadsheet[0]);
   }
-}
-
-function generateSuccessMessage(spreadsheetName) {
-  return [
-    "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:",
-    true,
-  ];
-}
-
-function generateFailureMessage(spreadsheetName) {
-  return [
-    "Du bist schon beim Training " +
-      spreadsheetName +
-      " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ",
-    false,
-  ];
 }
 
 module.exports = participate;
