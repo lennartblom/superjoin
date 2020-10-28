@@ -236,7 +236,7 @@ describe("`/gast` command", function () {
     }
     assert.strictEqual(returnValue[1], true);
   });
-  it("should say you're already participating on Tuesday's", function () {
+  it("should say Max Mustermann is already a guest on Tuesday", function () {
     global.SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
         getSheetByName: () => ({
