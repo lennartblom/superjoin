@@ -1,4 +1,4 @@
-const {getUserName} = require("./getUserName");
+const { getUserName } = require("./getUserName");
 const {} = require("./crossDomain");
 const {
   MONDAY_CHANNEL_ID,
@@ -41,10 +41,12 @@ function notifyAboutGuest(e) {
 function guestNotificationPayload(nickname, guestName) {
   return JSON.stringify({
     text:
-        ":heavy_plus_sign: `" +
-        nickname +
-        "` hat `" + guestName + "` zum nächsten Training angemeldet!",
-  })
+      ":heavy_plus_sign: `" +
+      nickname +
+      "` hat `" +
+      guestName +
+      "` zum nächsten Training angemeldet!",
+  });
 }
 
 function participantNotificationMessage(participant) {
@@ -53,7 +55,7 @@ function participantNotificationMessage(participant) {
       ":heavy_plus_sign: `" +
       participant +
       "` hat sich zum nächsten Training angemeldet!",
-  })
+  });
 }
 
 function notifyChannelAboutNewParticipant(channelId, userName, guestName) {
@@ -67,7 +69,9 @@ function notifyChannelAboutNewParticipant(channelId, userName, guestName) {
     headers: {
       "Content-type": "application/json",
     },
-    payload: guestName ? guestNotificationPayload(userName, guestName) : participantNotificationMessage(userName)
+    payload: guestName
+      ? guestNotificationPayload(userName, guestName)
+      : participantNotificationMessage(userName),
   };
   UrlFetchApp.fetch(channelWebHookUrl, requestOptions);
 

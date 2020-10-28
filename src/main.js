@@ -1,7 +1,10 @@
 const participate = require("./participate");
 const listParticipants = require("./listParticipants");
 const { signOut } = require("./signOut");
-const { notifyAboutParticipant, notifyAboutGuest } = require("./channelNotifications");
+const {
+  notifyAboutParticipant,
+  notifyAboutGuest,
+} = require("./channelNotifications");
 
 const PARTICIPATE_COMMAND = "/dabei";
 const LIST_PARTICIPANTS_COMMAND = "/teilnehmer";
