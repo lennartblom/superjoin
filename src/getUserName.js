@@ -5,7 +5,6 @@ function getUserName(nickname, userId) {
     `https://slack.com/api/users.info?token=${BOT_ACCESS_TOKEN}&user=${userId}`
   );
 
-  console.log(response);
   const content = JSON.parse(response.getContentText());
 
   if (content.ok) {

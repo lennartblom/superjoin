@@ -1,4 +1,4 @@
-const {getUserName} = require("./getUserName");
+const { getUserName } = require("./getUserName");
 const {} = require("./crossDomain");
 const {
   MONDAY_CHANNEL_ID,
@@ -23,10 +23,42 @@ function notifyAboutParticipant(e) {
   const channelId = e.parameter.channel_id;
   const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
 
-  notifyChannelAboutNewParticipant(channelId, userName);
+  notifyChannelAboutNewParticipant(channelId, userName, false);
 }
 
-function notifyChannelAboutNewParticipant(channelId, participant) {
+function notifyAboutGuest(e) {
+  if (typeof e === "undefined") {
+    return;
+  }
+
+  const channelId = e.parameter.channel_id;
+  const userName = getUserName(e.parameter.user_name, e.parameter.user_id);
+  const guestName = e.parameter.text;
+
+  notifyChannelAboutNewParticipant(channelId, userName, guestName);
+}
+
+function guestNotificationPayload(nickname, guestName) {
+  return JSON.stringify({
+    text:
+      ":heavy_plus_sign: `" +
+      nickname +
+      "` hat `" +
+      guestName +
+      "` zum nächsten Training angemeldet!",
+  });
+}
+
+function participantNotificationMessage(participant) {
+  return JSON.stringify({
+    text:
+      ":heavy_plus_sign: `" +
+      participant +
+      "` hat sich zum nächsten Training angemeldet!",
+  });
+}
+
+function notifyChannelAboutNewParticipant(channelId, userName, guestName) {
   const channelWebHookUrl = getChannelWebhook(channelId);
 
   if (channelWebHookUrl == null) {
@@ -37,12 +69,9 @@ function notifyChannelAboutNewParticipant(channelId, participant) {
     headers: {
       "Content-type": "application/json",
     },
-    payload: JSON.stringify({
-      text:
-        ":heavy_plus_sign: `" +
-        participant +
-        "` hat sich zum nächsten Training angemeldet!",
-    }),
+    payload: guestName
+      ? guestNotificationPayload(userName, guestName)
+      : participantNotificationMessage(userName),
   };
   UrlFetchApp.fetch(channelWebHookUrl, requestOptions);
 
@@ -75,6 +104,7 @@ function getChannelWebhook(channelId) {
 module.exports = {
   notifyChannelAboutNewParticipant: notifyChannelAboutNewParticipant,
   notifyAboutParticipant: notifyAboutParticipant,
+  notifyAboutGuest: notifyAboutGuest,
 };
 
 exports._test = {

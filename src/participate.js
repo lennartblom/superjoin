@@ -1,5 +1,7 @@
-const { getSpreadsheetName } = require("./crossDomain");
 const { getUserName } = require("./getUserName");
+const {
+  saveNewTrainingAttendeeToSpreadSheet,
+} = require("./spreadsheetService");
 
 function participate(e) {
   if (typeof e === "undefined") {
@@ -12,78 +14,34 @@ function participate(e) {
   const channelId = e.parameter.channel_id;
   const userId = e.parameter.user_id;
 
-  return saveNewTrainingAttendeeToSpreadSheet(
+  const addedToSpreadsheet = saveNewTrainingAttendeeToSpreadSheet(
     channelId,
     spreadsheetApp,
     userName,
     userId
   );
-}
 
-function addParticipantToSpreadsheet(newSpreadsheet, userName, userId) {
-  newSpreadsheet.appendRow([userName, userId, new Date().toISOString()]);
-}
-
-function createSpreadsheetAndAddParticipant(
-  spreadsheetApp,
-  spreadsheetName,
-  userName,
-  userId
-) {
-  const newSpreadsheet = newSheet(spreadsheetApp, spreadsheetName);
-  addParticipantToSpreadsheet(newSpreadsheet, userName, userId);
-  return spreadsheetName;
-}
-
-function generateResultMessage(output, newParticipant) {
-  return [output, newParticipant];
-}
-
-function saveNewTrainingAttendeeToSpreadSheet(
-  channelId,
-  spreadsheetApp,
-  userName,
-  userId
-) {
-  let spreadsheetName = getSpreadsheetName(channelId);
-  let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
-
-  if (spreadsheet == null) {
-    const output = createSpreadsheetAndAddParticipant(
-      spreadsheetApp,
-      spreadsheetName,
-      userName,
-      userId
-    );
-    return generateResultMessage(output, true);
+  function generateSuccessMessage(spreadsheetName) {
+    return [
+      "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:",
+      true,
+    ];
   }
 
-  let upcomingTrainingParticipants = spreadsheet.getDataRange().getValues();
-  let alreadyInList = false;
-  upcomingTrainingParticipants.forEach(function (row) {
-    if (row[1] === userId) {
-      alreadyInList = true;
-    }
-  });
-
-  if (alreadyInList) {
-    const output =
+  function generateFailureMessage(spreadsheetName) {
+    return [
       "Du bist schon beim Training " +
-      spreadsheetName +
-      " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ";
-    return generateResultMessage(output, false);
+        spreadsheetName +
+        " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ",
+      false,
+    ];
   }
-  addParticipantToSpreadsheet(spreadsheet, userName, userId);
 
-  let output =
-    "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:";
-  return generateResultMessage(output, true);
-}
-
-function newSheet(spreadsheetApp, sheetName) {
-  const sheet = spreadsheetApp.insertSheet(sheetName);
-
-  return sheet.appendRow(["Name", "ID", "Eingetragen um"]);
+  if (addedToSpreadsheet[1]) {
+    return generateSuccessMessage(addedToSpreadsheet[0]);
+  } else {
+    return generateFailureMessage(addedToSpreadsheet[0]);
+  }
 }
 
 module.exports = participate;
