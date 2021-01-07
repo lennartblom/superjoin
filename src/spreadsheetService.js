@@ -20,7 +20,7 @@ function saveNewTrainingAttendeeToSpreadSheet(
   let spreadsheet = spreadsheetApp.getSheetByName(spreadsheetName);
 
   if (spreadsheet == null) {
-    spreadsheet = newSheet(spreadsheetApp, sheetName);
+    spreadsheet = newSheet(spreadsheetApp, spreadsheetName);
     addParticipantToSpreadsheet(spreadsheet, userName, userId);
 
     return [spreadsheetName, true];
