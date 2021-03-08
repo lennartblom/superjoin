@@ -2,6 +2,7 @@ const { getUserName } = require("./getUserName");
 const {} = require("./crossDomain");
 const {
   MONDAY_CHANNEL_ID,
+  MONDAY_STABILITY_CHANNEL_ID,
   TUESDAY_CHANNEL_ID,
   THURSDAY_CHANNEL_ID,
   SATURDAY_CHANNEL_ID,
@@ -9,6 +10,7 @@ const {
 } = require("./crossDomain");
 const {
   MONDAY_WEBHOOK_URL,
+  MONDAY_STABILITY_WEBHOOK_URL,
   TUESDAY_WEBHOOK_URL,
   THURSDAY_WEBHOOK_URL,
   SATURDAY_WEBHOOK_URL,
@@ -82,6 +84,9 @@ function getChannelWebhook(channelId) {
   switch (channelId) {
     case MONDAY_CHANNEL_ID: {
       return MONDAY_WEBHOOK_URL;
+    }
+    case MONDAY_STABILITY_CHANNEL_ID: {
+      return MONDAY_STABILITY_WEBHOOK_URL;
     }
     case TUESDAY_CHANNEL_ID: {
       return TUESDAY_WEBHOOK_URL;

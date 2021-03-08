@@ -78,9 +78,7 @@ function addEndingCodeSection(participantsOutput, endingLinebreak) {
 
 function initializeWithTrainingHeadline(spreadsheetName) {
   return (
-    "\n:eilbeck: *Trainingsteilnehmer am `" +
-    spreadsheetName +
-    "`* :page_with_curl:\n"
+    "\n:eilbeck: *Trainingsteilnehmer `" + spreadsheetName + "`* :page_with_curl:\n"
   );
 }
 
