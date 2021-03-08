@@ -21,18 +21,24 @@ function participate(e) {
     userId
   );
 
+  /**
+   * Beispiel: Du bist beim Training Montag Stabi 21.04.2021 dabei!
+   */
   function generateSuccessMessage(spreadsheetName) {
     return [
-      "Du bist beim Training am " + spreadsheetName + " dabei :confetti_ball:",
+      "Du bist beim Training `" + spreadsheetName + "` dabei! :confetti_ball:",
       true,
     ];
   }
 
+  /**
+   * Du bist schon beim Training Montag Stabi 21.04.2021 dabei.
+   * Brauchst dich also nicht mehr eintragen!
+   */
   function generateFailureMessage(spreadsheetName) {
     return [
-      "Du bist schon beim Training " +
-        spreadsheetName +
-        " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ",
+      "Du bist schon beim Training `" + spreadsheetName + "` dabei. " +
+      "Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: ",
       false,
     ];
   }

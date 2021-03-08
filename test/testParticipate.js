@@ -1,6 +1,26 @@
 const assert = require("assert");
 const participate = require("../src/participate");
 
+const MONDAY_TIME_DIFF = 1;
+const TUESDAY_TIME_DIFF = 2;
+const THURSDAY_TIME_DIFF = 4;
+const SATURDAY_TIME_DIFF = 6;
+const SUNDAY_TIME_DIFF = 7;
+
+const MONDAY_STABILITY_CHANNEL_ID = "C01FGDKUNLC";
+const MONDAY_CHANNEL_ID = "C01BXQKR9KM";
+const TUESDAY_CHANNEL_ID = "C012C7UEX9C";
+const THURSDAY_CHANNEL_ID = "C012K00AJFL";
+const SATURDAY_CHANNEL_ID = "C012C7UQPSS";
+const SUNDAY_CHANNEL_ID = "C01D7L86K8Q";
+
+const MONDAY_STABILITY_TRAINING_NAME = "Montag Stabi";
+const MONDAY_TRAINING_NAME = "Montag";
+const TUESDAY_TRAINING_NAME = "Dienstag";
+const THURSDAY_TRAINING_NAME = "Donnerstag";
+const SATURDAY_TRAINING_NAME = "Samstag";
+const SUNDAY_TRAINING_NAME = "Sonntag";
+
 global.ContentService = {
   createTextOutput: (variable) => variable,
 };
@@ -27,31 +47,76 @@ describe("`/dabei` command", function () {
         user_name: "wolfgang",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C01BXQKR9KM",
+        channel_id: MONDAY_CHANNEL_ID,
         channel_name: "training-samstag",
       },
     };
 
-    let thisWeeksSaturday = getThisWeeksDay(false, 1);
-    let nextWeeksSaturday = getThisWeeksDay(true, 1);
+    let thisWeeksMonday = getThisWeeksDay(false, MONDAY_TIME_DIFF);
+    let nextWeeksMonday = getThisWeeksDay(true, MONDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksSaturday < Date.now()) {
-      console.log("Expect next weeks Saturday");
+    if (thisWeeksMonday < Date.now()) {
+      console.log("Expect next weeks Monday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Montag")
+        createExpectedOutputForSuccessfulWrite(nextWeeksMonday, "Montag")
       );
     } else {
-      console.log("Expect this weeks Saturday");
+      console.log("Expect this weeks Monday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Montag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksMonday, "Montag")
       );
     }
     assert.strictEqual(returnValue[1], true);
   });
-  it("should return Tuesday when being in #training-dienstag channel", function () {
+  it("should return Monday when being in #stabitraining-montag channel", function () {
+    global.SpreadsheetApp = {
+      getActiveSpreadsheet: () => ({
+        getSheetByName: () => ({
+          appendRow: () => ({}),
+          getDataRange: () => ({
+            getValues: () => [
+              [""],
+              ["max mustermann", "max_user_ID", 1337],
+              ["alina musterfrau", "alina_user_ID", 1337],
+            ],
+          }),
+        }),
+      }),
+    };
+
+    const e = {
+      parameter: {
+        user_name: "wolfgang",
+        user_id: "a_user_ID",
+        command: "/dabei",
+        channel_id: MONDAY_STABILITY_CHANNEL_ID,
+        channel_name: "stabitraining-montag",
+      },
+    };
+
+    let thisWeeksMonday = getThisWeeksDay(false, MONDAY_TIME_DIFF);
+    let nextWeeksMonday = getThisWeeksDay(true, MONDAY_TIME_DIFF);
+    let returnValue = participate(e);
+
+    if (thisWeeksMonday < Date.now()) {
+      console.log("Expect next weeks Monday");
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(nextWeeksMonday, MONDAY_STABILITY_TRAINING_NAME)
+      );
+    } else {
+      console.log("Expect this weeks Monday");
+      assert.strictEqual(
+        returnValue[0],
+        createExpectedOutputForSuccessfulWrite(thisWeeksMonday, MONDAY_STABILITY_TRAINING_NAME)
+      );
+    }
+    assert.strictEqual(returnValue[1], true);
+  });
+  it("should return Tuesday when being in #training-montag channel", function () {
     global.SpreadsheetApp = {
       getActiveSpreadsheet: () => ({
         getSheetByName: () => ({
@@ -71,26 +136,26 @@ describe("`/dabei` command", function () {
         user_name: "wolfgang",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C012C7UEX9C",
+        channel_id: TUESDAY_CHANNEL_ID,
         channel_name: "training-dienstag",
       },
     };
 
-    let thisWeeksTuesday = getThisWeeksDay(false, 2);
-    let nextWeeksTuesday = getThisWeeksDay(true, 2);
+    let thisWeeksTuesday = getThisWeeksDay(false, TUESDAY_TIME_DIFF);
+    let nextWeeksTuesday = getThisWeeksDay(true, TUESDAY_TIME_DIFF);
     let returnValue = participate(requestData);
 
     if (thisWeeksTuesday < Date.now()) {
       console.log("Expect next weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, "Dienstag")
+        createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, TUESDAY_TRAINING_NAME)
       );
     } else {
       console.log("Expect this weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, "Dienstag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksTuesday, TUESDAY_TRAINING_NAME)
       );
     }
     assert.strictEqual(returnValue[1], true);
@@ -116,26 +181,26 @@ describe("`/dabei` command", function () {
         user_name: "Wolfgang",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C012K00AJFL",
+        channel_id: THURSDAY_CHANNEL_ID,
         channel_name: "training-donnerstag",
       },
     };
 
-    let thisWeeksThursday = getThisWeeksDay(false, 4);
-    let nextWeeksThursday = getThisWeeksDay(true, 4);
+    let thisWeeksThursday = getThisWeeksDay(false, THURSDAY_TIME_DIFF);
+    let nextWeeksThursday = getThisWeeksDay(true, THURSDAY_TIME_DIFF);
     let returnValue = participate(e);
 
     if (thisWeeksThursday < Date.now()) {
       console.log("Expect next weeks Thursday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(nextWeeksThursday, "Donnerstag")
+        createExpectedOutputForSuccessfulWrite(nextWeeksThursday, THURSDAY_TRAINING_NAME)
       );
     } else {
       console.log("Expect this weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksThursday, "Donnerstag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksThursday, THURSDAY_TRAINING_NAME)
       );
     }
     assert.strictEqual(returnValue[1], true);
@@ -162,26 +227,26 @@ describe("`/dabei` command", function () {
         user_name: "wolfgang",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C012C7UQPSS",
+        channel_id: SATURDAY_CHANNEL_ID,
         channel_name: "training-samstag",
       },
     };
 
-    let thisWeeksSaturday = getThisWeeksDay(false, 6);
-    let nextWeeksSaturday = getThisWeeksDay(true, 6);
+    let thisWeeksSaturday = getThisWeeksDay(false, SATURDAY_TIME_DIFF);
+    let nextWeeksSaturday = getThisWeeksDay(true, SATURDAY_TIME_DIFF);
     let returnValue = participate(e);
 
     if (thisWeeksSaturday < Date.now()) {
       console.log("Expect next weeks Saturday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Samstag")
+        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, SATURDAY_TRAINING_NAME)
       );
     } else {
       console.log("Expect this weeks Saturday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Samstag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, SATURDAY_TRAINING_NAME)
       );
     }
     assert.strictEqual(returnValue[1], true);
@@ -207,26 +272,26 @@ describe("`/dabei` command", function () {
         user_name: "wolfgang",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C01D7L86K8Q",
+        channel_id: SUNDAY_CHANNEL_ID,
         channel_name: "training-samstag",
       },
     };
 
-    let thisWeeksSaturday = getThisWeeksDay(false, 7);
-    let nextWeeksSaturday = getThisWeeksDay(true, 7);
+    let thisWeeksSaturday = getThisWeeksDay(false, SUNDAY_TIME_DIFF);
+    let nextWeeksSaturday = getThisWeeksDay(true, SUNDAY_TIME_DIFF);
     let returnValue = participate(e);
 
     if (thisWeeksSaturday < Date.now()) {
-      console.log("Expect next weeks Saturday");
+      console.log("Expect next weeks Sunday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Sonntag")
+        createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, SUNDAY_TRAINING_NAME)
       );
     } else {
-      console.log("Expect this weeks Saturday");
+      console.log("Expect this weeks SATURDAY_CHANNEL_ID");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Sonntag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, SUNDAY_TRAINING_NAME)
       );
     }
     assert.strictEqual(returnValue[1], true);
@@ -252,13 +317,13 @@ describe("`/dabei` command", function () {
         user_name: "max mustermann",
         user_id: "a_user_ID",
         command: "/dabei",
-        channel_id: "C012C7UEX9C",
+        channel_id: TUESDAY_CHANNEL_ID,
         channel_name: "training-dienstag",
       },
     };
 
-    let thisWeeksTuesday = getThisWeeksDay(false, 2);
-    let nextWeeksTuesday = getThisWeeksDay(true, 2);
+    let thisWeeksTuesday = getThisWeeksDay(false, TUESDAY_TIME_DIFF);
+    let nextWeeksTuesday = getThisWeeksDay(true, TUESDAY_TIME_DIFF);
     let returnValue = participate(requestData);
 
     if (thisWeeksTuesday < Date.now()) {
@@ -288,6 +353,11 @@ function getThisWeeksDay(plusOneWeek, dayConstant) {
   const date = new Date(Date.now());
   const today = date.getDate();
   const dayOfTheWeek = date.getDay();
+  if (dayConstant === MONDAY_TIME_DIFF) {
+    date.setHours(19);
+  } else {
+    date.setHours(18);
+  }
   let newDate = new Date(date.setDate(today - dayOfTheWeek + dayConstant));
 
   if (!plusOneWeek) {
@@ -300,21 +370,17 @@ function getThisWeeksDay(plusOneWeek, dayConstant) {
 
 function createdExpectedOutputForAlreadyParticipating(nextWeeksTuesday, day) {
   return (
-    "Du bist schon beim Training " +
+    "Du bist schon beim Training `" +
     day +
     " " +
     getDateInGermanFormat(nextWeeksTuesday) +
-    " dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: "
+    "` dabei. Brauchst dich also nicht mehr eintragen! :white_check_mark: :woman-running: :runner: "
   );
 }
 
 function createExpectedOutputForSuccessfulWrite(nextWeeksTuesday, day) {
   return (
-    "Du bist beim Training am " +
-    day +
-    " " +
-    getDateInGermanFormat(nextWeeksTuesday) +
-    " dabei :confetti_ball:"
+    "Du bist beim Training `" + day + " " + getDateInGermanFormat(nextWeeksTuesday) + "` dabei! :confetti_ball:"
   );
 }
 
