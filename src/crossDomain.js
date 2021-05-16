@@ -18,6 +18,47 @@ function getSpreadsheetName(channelId) {
   return fullTrainingWeekDayName + " " + upcomingTrainingWeekDayDate;
 }
 
+/*
+const MONDAY_TIME_DIFF = 1; // TIME DIFF or DATE DIFF ???
+const TUESDAY_TIME_DIFF = 2;
+const THURSDAY_TIME_DIFF = 4;
+const SATURDAY_TIME_DIFF = 6;
+const SUNDAY_TIME_DIFF = 7;
+
+const WEEKDAY_TO_TRAININGDATE = {
+	"Montag": {
+  		diff: MONDAY_TIME_DIFF,
+      startingtime: 18 // magicnumber in your code
+  },
+  "Dienstag": {
+  	diff: TUESDAY_TIME_DIFF,
+    startingtime: 18 // magicnumber in your code
+  },
+  "Sunday": {
+  	diff: TUESDAY_TIME_DIFF,
+    startingtime: 10 // magicnumber in your code
+  }
+}  
+
+let fullTrainingWeekDayName = "Montag" // "Sunday"
+
+// in der getUpcomingTrainingWeekDayDate()
+// könntest ihr das so oderso ähnlich umschreiben, euer switch case geht aber auch klar
+// finde die Schreibweise als object mit WEEKDAY_TO_TRAININGDATE ganz übersichtlich
+// die Abstraktionen getThisWeeksMonday() usw verstehe ich allerdings nicht
+// kommt mir irgendwie unnötig vor oder haben die einen tieferen Sinn?
+
+let tempTrainingdate = WEEKDAY_TO_TRAININGDATE[fullTrainingWeekDayName]
+
+const trainingDate = initializeWeekTrainingsDateWith(
+	tempTrainingdate.diff, tempTrainingdate.startingtime
+)
+
+function initializeWeekTrainingsDateWith(diff, somenumber){
+	console.log(diff, somenumber)
+}
+*/
+
 function getUpcomingTrainingWeekDayDate(trainingDay) {
   let trainingDate;
   switch (trainingDay) {
