@@ -24,7 +24,7 @@ function doPost(e) {
   switch (command) {
     case PARTICIPATE_COMMAND: {
       const result = participate(e);
-      textOutput = result[0] + listParticipants(e);
+      textOutput = result[0];
       if (result[1]) {
         notifyAboutParticipant(e);
       }
