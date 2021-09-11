@@ -25,6 +25,10 @@ global.ContentService = {
   createTextOutput: (variable) => variable,
 };
 
+function getTodaysDate(hours) {
+  return new Date(new Date(Date.now()).setHours(hours));
+}
+
 describe("`/dabei` command", function () {
   it("should return Monday when being in #training-montag channel", function () {
     global.SpreadsheetApp = {
@@ -41,6 +45,21 @@ describe("`/dabei` command", function () {
         }),
       }),
     };
+    const mockResponse = {
+      getContentText: function () {
+        return JSON.stringify({ ok: true, user: { real_name: "Test User" } });
+      },
+    };
+    global.UrlFetchApp = {
+      fetch: function (url) {
+        assert.strictEqual(
+          url,
+          `https://slack.com/api/users.info?token=xoxb-test&user=a_user_ID`
+        );
+
+        return mockResponse;
+      },
+    };
 
     const e = {
       parameter: {
@@ -56,7 +75,7 @@ describe("`/dabei` command", function () {
     let nextWeeksMonday = getThisWeeksDay(true, MONDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksMonday < Date.now()) {
+    if (thisWeeksMonday <= getTodaysDate(19)) {
       console.log("Expect next weeks Monday");
       assert.strictEqual(
         returnValue[0],
@@ -101,7 +120,7 @@ describe("`/dabei` command", function () {
     let nextWeeksMonday = getThisWeeksDay(true, MONDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksMonday < Date.now()) {
+    if (thisWeeksMonday <= getTodaysDate(19)) {
       console.log("Expect next weeks Monday");
       assert.strictEqual(
         returnValue[0],
@@ -145,7 +164,7 @@ describe("`/dabei` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, TUESDAY_TIME_DIFF);
     let returnValue = participate(requestData);
 
-    if (thisWeeksTuesday < Date.now()) {
+    if (thisWeeksTuesday <= getTodaysDate(18)) {
       console.log("Expect next weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
@@ -190,7 +209,7 @@ describe("`/dabei` command", function () {
     let nextWeeksThursday = getThisWeeksDay(true, THURSDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksThursday < Date.now()) {
+    if (thisWeeksThursday <= getTodaysDate(18)) {
       console.log("Expect next weeks Thursday");
       assert.strictEqual(
         returnValue[0],
@@ -236,7 +255,7 @@ describe("`/dabei` command", function () {
     let nextWeeksSaturday = getThisWeeksDay(true, SATURDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksSaturday < Date.now()) {
+    if (thisWeeksSaturday <= getTodaysDate(18)) {
       console.log("Expect next weeks Saturday");
       assert.strictEqual(
         returnValue[0],
@@ -281,7 +300,7 @@ describe("`/dabei` command", function () {
     let nextWeeksSaturday = getThisWeeksDay(true, SUNDAY_TIME_DIFF);
     let returnValue = participate(e);
 
-    if (thisWeeksSaturday < Date.now()) {
+    if (thisWeeksSaturday <= getTodaysDate(18)) {
       console.log("Expect next weeks Sunday");
       assert.strictEqual(
         returnValue[0],
@@ -326,7 +345,7 @@ describe("`/dabei` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, TUESDAY_TIME_DIFF);
     let returnValue = participate(requestData);
 
-    if (thisWeeksTuesday < Date.now()) {
+    if (thisWeeksTuesday <= getTodaysDate(18)) {
       console.log("Expect next weeks Tuesday");
       assert.strictEqual(
         returnValue[0],

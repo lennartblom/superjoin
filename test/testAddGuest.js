@@ -5,6 +5,10 @@ global.ContentService = {
   createTextOutput: (variable) => variable,
 };
 
+function getTodaysDate(hours) {
+  return new Date(new Date(Date.now()).setHours(hours));
+}
+
 describe("`/gast` command", function () {
   it("should return Monday when being in #training-montag channel", function () {
     global.SpreadsheetApp = {
@@ -33,21 +37,21 @@ describe("`/gast` command", function () {
       },
     };
 
-    let thisWeeksSaturday = getThisWeeksDay(false, 1);
+    let thisWeeksMonday = getThisWeeksDay(false, 1);
     let nextWeeksSaturday = getThisWeeksDay(true, 1);
     let returnValue = addGuest(e);
 
-    if (thisWeeksSaturday < Date.now()) {
-      console.log("Expect next weeks Saturday");
+    if (thisWeeksMonday <= getTodaysDate(19)) {
+      console.log("Expect next weeks Monday");
       assert.strictEqual(
         returnValue[0],
         createExpectedOutputForSuccessfulWrite(nextWeeksSaturday, "Montag")
       );
     } else {
-      console.log("Expect this weeks Saturday");
+      console.log("Expect this weeks Monday");
       assert.strictEqual(
         returnValue[0],
-        createExpectedOutputForSuccessfulWrite(thisWeeksSaturday, "Montag")
+        createExpectedOutputForSuccessfulWrite(thisWeeksMonday, "Montag")
       );
     }
     assert.strictEqual(returnValue[1], true);
@@ -82,7 +86,7 @@ describe("`/gast` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
     let returnValue = addGuest(requestData);
 
-    if (thisWeeksTuesday < Date.now()) {
+    if (thisWeeksTuesday <= getTodaysDate(18)) {
       console.log("Expect next weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
@@ -128,7 +132,7 @@ describe("`/gast` command", function () {
     let nextWeeksThursday = getThisWeeksDay(true, 4);
     let returnValue = addGuest(e);
 
-    if (thisWeeksThursday < Date.now()) {
+    if (thisWeeksThursday <= getTodaysDate(18)) {
       console.log("Expect next weeks Thursday");
       assert.strictEqual(
         returnValue[0],
@@ -175,7 +179,7 @@ describe("`/gast` command", function () {
     let nextWeeksSaturday = getThisWeeksDay(true, 6);
     let returnValue = addGuest(e);
 
-    if (thisWeeksSaturday < Date.now()) {
+    if (thisWeeksSaturday <= getTodaysDate(18)) {
       console.log("Expect next weeks Saturday");
       assert.strictEqual(
         returnValue[0],
@@ -221,7 +225,7 @@ describe("`/gast` command", function () {
     let nextWeeksSaturday = getThisWeeksDay(true, 7);
     let returnValue = addGuest(e);
 
-    if (thisWeeksSaturday < Date.now()) {
+    if (thisWeeksSaturday <= getTodaysDate(18)) {
       console.log("Expect next weeks Saturday");
       assert.strictEqual(
         returnValue[0],
@@ -267,7 +271,7 @@ describe("`/gast` command", function () {
     let nextWeeksTuesday = getThisWeeksDay(true, 2);
     let returnValue = addGuest(requestData);
 
-    if (thisWeeksTuesday < Date.now()) {
+    if (thisWeeksTuesday <= getTodaysDate(18)) {
       console.log("Expect next weeks Tuesday");
       assert.strictEqual(
         returnValue[0],
