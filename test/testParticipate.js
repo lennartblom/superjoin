@@ -41,6 +41,21 @@ describe("`/dabei` command", function () {
         }),
       }),
     };
+    const mockResponse = {
+      getContentText: function () {
+        return JSON.stringify({ ok: true, user: { real_name: "Test User" } });
+      },
+    };
+    global.UrlFetchApp = {
+      fetch: function (url) {
+        assert.strictEqual(
+          url,
+          `https://slack.com/api/users.info?token=xoxb-test&user=a_user_ID`
+        );
+
+        return mockResponse;
+      },
+    };
 
     const e = {
       parameter: {
